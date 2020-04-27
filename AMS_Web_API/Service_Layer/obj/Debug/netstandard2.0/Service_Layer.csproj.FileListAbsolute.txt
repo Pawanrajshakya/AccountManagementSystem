@@ -1,0 +1,11 @@
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/bin/Debug/netstandard2.0/Service_Layer.deps.json
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/bin/Debug/netstandard2.0/Service_Layer.dll
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/bin/Debug/netstandard2.0/Service_Layer.pdb
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/obj/Debug/netstandard2.0/Service_Layer.csprojAssemblyReference.cache
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/obj/Debug/netstandard2.0/Service_Layer.AssemblyInfoInputs.cache
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/obj/Debug/netstandard2.0/Service_Layer.AssemblyInfo.cs
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/obj/Debug/netstandard2.0/Service_Layer.dll
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/obj/Debug/netstandard2.0/Service_Layer.pdb
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/bin/Debug/netstandard2.0/Persistence_Layer.dll
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/bin/Debug/netstandard2.0/Persistence_Layer.pdb
+/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/obj/Debug/netstandard2.0/Service_Layer.csproj.CopyComplete

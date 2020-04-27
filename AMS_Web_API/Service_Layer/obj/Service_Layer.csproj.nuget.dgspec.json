@@ -1,0 +1,138 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/Service_Layer.csproj": {}
+  },
+  "projects": {
+    "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Persistence_Layer/Persistence_Layer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Persistence_Layer/Persistence_Layer.csproj",
+        "projectName": "Persistence_Layer",
+        "projectPath": "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Persistence_Layer/Persistence_Layer.csproj",
+        "packagesPath": "/Users/shakya/.nuget/packages/",
+        "outputPath": "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Persistence_Layer/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/shakya/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/Service_Layer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/Service_Layer.csproj",
+        "projectName": "Service_Layer",
+        "projectPath": "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/Service_Layer.csproj",
+        "packagesPath": "/Users/shakya/.nuget/packages/",
+        "outputPath": "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Service_Layer/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/shakya/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {
+              "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Persistence_Layer/Persistence_Layer.csproj": {
+                "projectPath": "/Users/shakya/Documents/AccountManagementSystem/AMS_Web_API/Persistence_Layer/Persistence_Layer.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.102/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
