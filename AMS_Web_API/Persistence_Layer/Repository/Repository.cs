@@ -18,9 +18,9 @@ namespace Persistence_Layer.Repository
             _dbContext = dbContext;
         }
 
-        public void Add(TEntity entity)
+        public async void Add(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Add(entity);
+            await _dbContext.Set<TEntity>().AddAsync(entity);
         }
 
         public void AddRange(IEnumerable<TEntity> entities)

@@ -10,7 +10,7 @@ using Persistence_Layer.Data;
 namespace Persistence_Layer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200426131725_InitalCreateDB")]
+    [Migration("20200427193258_InitalCreateDB")]
     partial class InitalCreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -326,11 +326,11 @@ namespace Persistence_Layer.Migrations
                             Address1 = "Address 1",
                             Address2 = "Address 2",
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 4, 26, 9, 17, 24, 773, DateTimeKind.Local).AddTicks(1740),
+                            CreatedDate = new DateTime(2020, 4, 27, 15, 32, 58, 60, DateTimeKind.Local).AddTicks(6480),
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 4, 26, 9, 17, 24, 773, DateTimeKind.Local).AddTicks(1760),
+                            LastModifiedDate = new DateTime(2020, 4, 27, 15, 32, 58, 60, DateTimeKind.Local).AddTicks(6500),
                             Name = "Business Name",
                             State = "zz",
                             ZipCode = "zzzzz"
@@ -426,12 +426,12 @@ namespace Persistence_Layer.Migrations
                         {
                             Id = 1,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 4, 26, 9, 17, 24, 773, DateTimeKind.Local).AddTicks(5430),
+                            CreatedDate = new DateTime(2020, 4, 27, 15, 32, 58, 61, DateTimeKind.Local).AddTicks(460),
                             Description = "New Group",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 4, 26, 9, 17, 24, 773, DateTimeKind.Local).AddTicks(5450),
+                            LastModifiedDate = new DateTime(2020, 4, 27, 15, 32, 58, 61, DateTimeKind.Local).AddTicks(480),
                             Order = 0
                         });
                 });
@@ -518,34 +518,34 @@ namespace Persistence_Layer.Migrations
                         {
                             Id = 1,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 4, 26, 9, 17, 24, 759, DateTimeKind.Local).AddTicks(640),
+                            CreatedDate = new DateTime(2020, 4, 27, 15, 32, 58, 46, DateTimeKind.Local).AddTicks(7380),
                             Description = "Admin",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 4, 26, 9, 17, 24, 771, DateTimeKind.Local).AddTicks(2840)
+                            LastModifiedDate = new DateTime(2020, 4, 27, 15, 32, 58, 58, DateTimeKind.Local).AddTicks(9090)
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 4, 26, 9, 17, 24, 771, DateTimeKind.Local).AddTicks(6580),
+                            CreatedDate = new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2450),
                             Description = "User",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 4, 26, 9, 17, 24, 771, DateTimeKind.Local).AddTicks(6670)
+                            LastModifiedDate = new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2490)
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 4, 26, 9, 17, 24, 771, DateTimeKind.Local).AddTicks(6750),
+                            CreatedDate = new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2560),
                             Description = "Viewer",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 4, 26, 9, 17, 24, 771, DateTimeKind.Local).AddTicks(6750)
+                            LastModifiedDate = new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2560)
                         });
                 });
 
@@ -702,6 +702,33 @@ namespace Persistence_Layer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Persistence_Layer.Models.UserActivity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ActionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ControllerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateRequested")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserActivities");
                 });
 
             modelBuilder.Entity("Persistence_Layer.Models.UserHistory", b =>

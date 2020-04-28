@@ -34,7 +34,8 @@ namespace Service_Layer.Services
             userToCreate.PasswordSalt = passwordSalt;
             userToCreate.IsActive = true;
             userToCreate.IsVisible = true;
-            userToCreate.CreatedBy = CurrentUser.User.Id;
+            if (CurrentUser.User != null)
+                userToCreate.CreatedBy = CurrentUser.User.Id;
 
             userToCreate.UserRole = new System.Collections.Generic.List<UserRole>();
 

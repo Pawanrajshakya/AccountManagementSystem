@@ -22,6 +22,7 @@ namespace Persistence_Layer.Data
         public DbSet<Account> Account { get; set; }
         public DbSet<UserHistory> UserHistories { get; set; }
         public DbSet<AccountHistory> AccountHistories { get; set; }
+        public DbSet<UserActivity> UserActivities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

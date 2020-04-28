@@ -13,7 +13,8 @@ namespace Service_Layer.Services
             IGroupService group,
             IAccountService account,
             IClientService client,
-            IRelationshipService relationship)
+            IRelationshipService relationship,
+            IUserActivityService userActivity)
         {
             this.Business = business;
             this.Role = role;
@@ -23,6 +24,7 @@ namespace Service_Layer.Services
             this.Account = account;
             this.Client = client;
             this.Relationship = relationship;
+            this.UserActivity = userActivity;
         }
 
         public IBusinessService Business { get; private set; }
@@ -35,5 +37,6 @@ namespace Service_Layer.Services
         public ITransactionTypeService TransactionType { get; private set; }
         public ITransactionService Transaction { get; private set; }
         public IUserService User { get; private set; }
+        public IUserActivityService UserActivity { get; private set; }
     }
 }

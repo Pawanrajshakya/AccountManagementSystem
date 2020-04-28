@@ -9,13 +9,16 @@ namespace Service_Layer.Helpers
         {
             //User
             CreateMap<Persistence_Layer.Models.User, UserDto>().ForMember(x => x.UserRole, opt => opt.Ignore());
-            CreateMap<UserDto, Persistence_Layer.Models.User>().ForMember(x => x.UserRole, opt => opt.Ignore()); ;
-            CreateMap<UserToSaveDto, Persistence_Layer.Models.User>().ForMember(x => x.UserRole, opt => opt.Ignore()); ;
-            CreateMap<UserToEditDto, Persistence_Layer.Models.User>().ForMember(x => x.UserRole, opt => opt.Ignore()); ;
+            CreateMap<UserDto, Persistence_Layer.Models.User>().ForMember(x => x.UserRole, opt => opt.Ignore());
+            CreateMap<UserToSaveDto, Persistence_Layer.Models.User>().ForMember(x => x.UserRole, opt => opt.Ignore());
+            CreateMap<UserToEditDto, Persistence_Layer.Models.User>().ForMember(x => x.UserRole, opt => opt.Ignore());
+
+            //UserActivity
+            CreateMap<UserActivityToSaveDto, Persistence_Layer.Models.UserActivity>();
 
             //UserHistory
             CreateMap<Persistence_Layer.Models.UserHistory, UserHistoryDto>();
-            CreateMap<UserHistoryDto, Persistence_Layer.Models.UserHistory>(); ;
+            CreateMap<UserHistoryDto, Persistence_Layer.Models.UserHistory>();
 
             //Client
             CreateMap<Persistence_Layer.Models.Client, ClientDto>();

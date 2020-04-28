@@ -59,6 +59,7 @@ namespace API
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IRelationshipService, RelationshipService>();
+            services.AddScoped<IUserActivityService, UserActivityService>();
             services.AddScoped<LogUserActivity>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

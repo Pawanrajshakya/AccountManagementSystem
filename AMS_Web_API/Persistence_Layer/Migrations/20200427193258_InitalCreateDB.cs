@@ -130,6 +130,23 @@ namespace Persistence_Layer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserActivities",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(nullable: false),
+                    DateRequested = table.Column<DateTime>(nullable: false),
+                    ControllerName = table.Column<string>(nullable: true),
+                    ActionName = table.Column<string>(nullable: true),
+                    Comment = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserActivities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserHistories",
                 columns: table => new
                 {
@@ -380,21 +397,21 @@ namespace Persistence_Layer.Migrations
             migrationBuilder.InsertData(
                 table: "Businesses",
                 columns: new[] { "Id", "Address1", "Address2", "CreatedBy", "CreatedDate", "Description", "IsActive", "IsVisible", "LastModifiedBy", "LastModifiedDate", "Name", "State", "ZipCode" },
-                values: new object[] { 1, "Address 1", "Address 2", 0, new DateTime(2020, 4, 26, 9, 17, 24, 773, DateTimeKind.Local).AddTicks(1740), null, true, true, 0, new DateTime(2020, 4, 26, 9, 17, 24, 773, DateTimeKind.Local).AddTicks(1760), "Business Name", "zz", "zzzzz" });
+                values: new object[] { 1, "Address 1", "Address 2", 0, new DateTime(2020, 4, 27, 15, 32, 58, 60, DateTimeKind.Local).AddTicks(6480), null, true, true, 0, new DateTime(2020, 4, 27, 15, 32, 58, 60, DateTimeKind.Local).AddTicks(6500), "Business Name", "zz", "zzzzz" });
 
             migrationBuilder.InsertData(
                 table: "Groups",
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "Description", "IsActive", "IsVisible", "LastModifiedBy", "LastModifiedDate", "Order" },
-                values: new object[] { 1, 0, new DateTime(2020, 4, 26, 9, 17, 24, 773, DateTimeKind.Local).AddTicks(5430), "New Group", true, true, 0, new DateTime(2020, 4, 26, 9, 17, 24, 773, DateTimeKind.Local).AddTicks(5450), 0 });
+                values: new object[] { 1, 0, new DateTime(2020, 4, 27, 15, 32, 58, 61, DateTimeKind.Local).AddTicks(460), "New Group", true, true, 0, new DateTime(2020, 4, 27, 15, 32, 58, 61, DateTimeKind.Local).AddTicks(480), 0 });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "Description", "IsActive", "IsVisible", "LastModifiedBy", "LastModifiedDate" },
                 values: new object[,]
                 {
-                    { 1, 0, new DateTime(2020, 4, 26, 9, 17, 24, 759, DateTimeKind.Local).AddTicks(640), "Admin", true, true, 0, new DateTime(2020, 4, 26, 9, 17, 24, 771, DateTimeKind.Local).AddTicks(2840) },
-                    { 2, 0, new DateTime(2020, 4, 26, 9, 17, 24, 771, DateTimeKind.Local).AddTicks(6580), "User", true, true, 0, new DateTime(2020, 4, 26, 9, 17, 24, 771, DateTimeKind.Local).AddTicks(6670) },
-                    { 3, 0, new DateTime(2020, 4, 26, 9, 17, 24, 771, DateTimeKind.Local).AddTicks(6750), "Viewer", true, true, 0, new DateTime(2020, 4, 26, 9, 17, 24, 771, DateTimeKind.Local).AddTicks(6750) }
+                    { 1, 0, new DateTime(2020, 4, 27, 15, 32, 58, 46, DateTimeKind.Local).AddTicks(7380), "Admin", true, true, 0, new DateTime(2020, 4, 27, 15, 32, 58, 58, DateTimeKind.Local).AddTicks(9090) },
+                    { 2, 0, new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2450), "User", true, true, 0, new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2490) },
+                    { 3, 0, new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2560), "Viewer", true, true, 0, new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2560) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -450,6 +467,9 @@ namespace Persistence_Layer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Transactions");
+
+            migrationBuilder.DropTable(
+                name: "UserActivities");
 
             migrationBuilder.DropTable(
                 name: "UserHistories");
