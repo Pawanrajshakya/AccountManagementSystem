@@ -19,40 +19,12 @@ namespace API.Controllers
         //     executing action.
         protected ClaimsPrincipal UserClaim { get; }
 
-        // public string CurrentClaims
-        // {
-        //     get
-        //     {
-        //         ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
-        //         var claims = new StringBuilder();
-        //         if (null != principal)
-        //         {
-        //             foreach (Claim claim in principal.Claims)
-        //             {
-        //                 claims.Append("CLAIM TYPE: " + claim.Type + "; CLAIM VALUE: " + claim.Value + "</br>");
-        //             }
-        //         }
-        //         return claims.ToString();
-        //         // //_serviceManager.User.FindBy(UserClaim.Identity.Name).Result.Id;
-        //         // var userid = _serviceManager.User.FindBy(UserClaim.Identity.Name).Result.Id;
-        //         // var user = _serviceManager.User.Get(1).Result;
-        //         // return 1;
-        //     }
-        //}
-
         public BaseApiController(IServiceManager service, IConfiguration config)
         {
             _config = config;
             _serviceManager = service;
-            //_serviceManager.UserId = GetCurrentUserId().Result;
         }
 
-        public async Task<int> GetCurrentUserId()
-        {
-            ClaimsPrincipal principal = HttpContext.User as ClaimsPrincipal;
-            var user = await _serviceManager.User.FindBy(principal.Identity.Name);
-            return user.Id;
-        }
 
         protected IActionResult GetModalStateMessage()
         {

@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using API.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Service_Layer.Dtos;
@@ -6,15 +8,18 @@ using Service_Layer.Interface;
 
 namespace API.Controllers
 {
+    [ServiceFilter(typeof(LogUserActivity))]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RoleController : BaseApiController
     {
-        public RoleController(IServiceManager service, IConfiguration config) : base(service, config)
+        public RoleController(IServiceManager service, IConfiguration config)
+        : base(service, config)
         {
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             try
@@ -32,7 +37,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -50,7 +55,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost("post")]
+        [HttpPost]
         public async Task<IActionResult> Post(RoleToSaveDto roleDto)
         {
             try
@@ -66,7 +71,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPatch("patch/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> Patch(int id, RoleToEditDto roleDto)
         {
             try
@@ -82,24 +87,8 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {
-                if (await _serviceManager.Role.Remove(id))
-                    return Ok();
-
-                return BadRequest();
-            }
-            catch (System.Exception e)
-            {
-                return HandleException(e);
-            }
-        }
-
-        [HttpPost("softdelete/{id}")]
-        public async Task<IActionResult> SoftDelete(int id)
         {
             try
             {

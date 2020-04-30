@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Service_Layer.Dtos;
 using Service_Layer.Interface;
 
-
 namespace API.Controllers
 {
     [Route("api/[controller]")]
@@ -15,8 +14,7 @@ namespace API.Controllers
         {
         }
 
-
-        [HttpGet("get")]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             try
@@ -34,7 +32,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -52,7 +50,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost("post")]
+        [HttpPost]
         public async Task<IActionResult> Post(GroupToSaveDto GroupDto)
         {
             try
@@ -68,7 +66,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPatch("patch/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> Patch(int id, GroupToEditDto GroupDto)
         {
             try
@@ -84,24 +82,8 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {
-                if (await _serviceManager.Group.Remove(id))
-                    return Ok();
-
-                return BadRequest();
-            }
-            catch (System.Exception e)
-            {
-                return HandleException(e);
-            }
-        }
-
-        [HttpPost("softdelete/{id}")]
-        public async Task<IActionResult> SoftDelete(int id)
         {
             try
             {

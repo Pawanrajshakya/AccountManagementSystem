@@ -95,7 +95,6 @@ namespace API.Controllers
             try
             {
                 if (await _serviceManager.User.SoftDelete(id))
-                    //if (await _serviceManager.User.Remove(id))
                     return Ok();
 
                 return BadRequest();
@@ -105,22 +104,6 @@ namespace API.Controllers
                 return HandleException(e);
             }
         }
-
-        // [HttpPost("softdelete/{id}")]
-        // public async Task<IActionResult> SoftDelete(int id)
-        // {
-        //     try
-        //     {
-        //         if (await _serviceManager.User.SoftDelete(id))
-        //             return Ok();
-
-        //         return BadRequest();
-        //     }
-        //     catch (System.Exception e)
-        //     {
-        //         return HandleException(e);
-        //     }
-        // }
 
         [HttpPost("register")]
         [AllowAnonymous]
@@ -151,7 +134,7 @@ namespace API.Controllers
 
             JwtSecurityTokenHandler tokenHandler;
             SecurityToken token;
-            
+
             GetToken(user, out tokenHandler, out token);
 
             return Ok(new

@@ -14,7 +14,7 @@ namespace API.Controllers
         {
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             try
@@ -32,7 +32,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("get/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -50,7 +50,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost("post")]
+        [HttpPost]
         public async Task<IActionResult> Post(ClientToSaveDto ClientDto)
         {
             try
@@ -66,7 +66,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpPatch("patch/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> Patch(int id, ClientToEditDto ClientDto)
         {
             try
@@ -82,24 +82,8 @@ namespace API.Controllers
             }
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
-        {
-            try
-            {
-                if (await _serviceManager.Client.Remove(id))
-                    return Ok();
-
-                return BadRequest();
-            }
-            catch (System.Exception e)
-            {
-                return HandleException(e);
-            }
-        }
-
-        [HttpPost("softdelete/{id}")]
-        public async Task<IActionResult> SoftDelete(int id)
         {
             try
             {
