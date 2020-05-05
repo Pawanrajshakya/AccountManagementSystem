@@ -6,6 +6,7 @@ using Service_Layer.Helpers;
 using Service_Layer.Dtos;
 using System;
 using System.Text;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Helpers
 {
@@ -16,9 +17,13 @@ namespace API.Helpers
             var userName = context.HttpContext.User.Identity.Name;
             if (userName != null)
             {
-
                 var service = context.HttpContext.RequestServices.GetService<IServiceManager>();
                 var userDto = await service.User.FindBy(userName);
+                if (userDto == null)
+                {
+                    context.Result = new BadRequestObjectResult("Invalid Request.");
+                    return;
+                }
                 CurrentUser.User = userDto;
                 UserActivityToSaveDto userActivityToSaveDto = new UserActivityToSaveDto();
                 userActivityToSaveDto.ControllerName = context.Controller.ToString();
@@ -37,7 +42,6 @@ namespace API.Helpers
                 await service.UserActivity.Add(userActivityToSaveDto);
             }
             await next();
-
         }
     }
 }

@@ -201,6 +201,9 @@ namespace Service_Layer.Services
         {
             var user = await _unitOfWork.User.Find(x => x.UserName.ToLower() == username.ToLower());
 
+            if (user == null)
+                return null;
+
             UserDto userDto = _mapper.Map<UserDto>(user);
 
             await GetUserRoles(user.Id, userDto);
