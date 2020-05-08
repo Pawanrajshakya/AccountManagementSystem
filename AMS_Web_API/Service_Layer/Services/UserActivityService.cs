@@ -13,20 +13,15 @@ namespace Service_Layer.Services
         {
         }
 
-        public async Task<bool> Add(UserActivityToSaveDto entity)
+        public async Task<int> Add(UserActivityToSaveDto entity)
         {
             UserActivity userActivity = _mapper.Map<UserActivity>(entity);
 
             await Task.Run(() => { _unitOfWork.UserActivity.Add(userActivity); });
             
-            //t.Wait();
-
-            // _unitOfWork.UserActivity.Add(userActivity);
-
-            if (_unitOfWork.Complete() > 0)
-                return true;
-
-            return false;
+            _unitOfWork.Complete();
+            
+            return userActivity.Id;
         }
     }
 }

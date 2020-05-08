@@ -6,6 +6,7 @@ using AutoMapper;
 using Persistence_Layer.Interfaces;
 using Persistence_Layer.Models;
 using Service_Layer.Dtos;
+using Service_Layer.Helpers;
 using Service_Layer.Interface;
 
 namespace Service_Layer.Services
@@ -17,7 +18,7 @@ namespace Service_Layer.Services
 
         }
 
-        public async Task<bool> Add(GroupToSaveDto entity)
+        public async Task<int> Add(GroupToSaveDto entity)
         {
             if (await _unitOfWork.Group.GroupExists(entity.Description))
             {
@@ -28,10 +29,9 @@ namespace Service_Layer.Services
 
             _unitOfWork.Group.Add(group);
 
-            if (_unitOfWork.Complete() > 0)
-                return true;
+            _unitOfWork.Complete();
 
-            return false;
+            return group.Id;
         }
 
         public async Task<GroupDto> Get(int id)
@@ -43,18 +43,23 @@ namespace Service_Layer.Services
             return groupDto;
         }
 
-        public async Task<IEnumerable<GroupDto>> GetAll()
+        // public async Task<IEnumerable<GroupDto>> GetAll()
+        // {
+        //     List<GroupDto> groupDtos = new List<GroupDto>();
+        //     var groups = (await this._unitOfWork.Group.GetAll()).Where(x => x.IsVisible);
+        //     if (groups != null)
+        //     {
+        //         foreach (var group in groups)
+        //         {
+        //             groupDtos.Add(_mapper.Map<GroupDto>(group));
+        //         }
+        //     }
+        //     return groupDtos;
+        // }
+
+        public Task<PagedList<GroupDto>> GetAll(UserParam userParam)
         {
-            List<GroupDto> groupDtos = new List<GroupDto>();
-            var groups = (await this._unitOfWork.Group.GetAll()).Where(x => x.IsVisible);
-            if (groups != null)
-            {
-                foreach (var group in groups)
-                {
-                    groupDtos.Add(_mapper.Map<GroupDto>(group));
-                }
-            }
-            return groupDtos;
+            throw new NotImplementedException();
         }
 
         public async Task<bool> Remove(int id)

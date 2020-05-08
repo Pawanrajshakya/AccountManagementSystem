@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Persistence_Layer.Models
 {
@@ -14,6 +15,6 @@ namespace Persistence_Layer.Models
         public string Name { get; set; }
         public string Gender { get; set; }
         public string Email { get; set; }
-        public virtual List<UserRole> UserRole { get; set; }
+        public virtual ICollection<UserRole> UserRole { get; set; }
     }
 }

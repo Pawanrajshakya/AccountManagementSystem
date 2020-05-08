@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Service_Layer.Dtos
 {
-    public class UserDto
+    public class UserToEditDto
     {
-        public UserDto()
+        public UserToEditDto()
         {
             UserRole = new List<int>();
         }
-        public int Id { get; set; }
+        [Required]
         [MinLength(6, ErrorMessage = "Minimum length for username is 6")]
         public string Username { get; set; }
         [Required]
@@ -20,4 +20,5 @@ namespace Service_Layer.Dtos
         public List<int> UserRole { get; set; }
         public bool IsActive { get; set; }
     }
+
 }

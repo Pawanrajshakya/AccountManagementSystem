@@ -6,6 +6,7 @@ using AutoMapper;
 using Persistence_Layer.Interfaces;
 using Persistence_Layer.Models;
 using Service_Layer.Dtos;
+using Service_Layer.Helpers;
 using Service_Layer.Interface;
 
 namespace Service_Layer.Services
@@ -16,7 +17,7 @@ namespace Service_Layer.Services
         {
         }
 
-        public async Task<bool> Add(AccountToSaveDto entity)
+        public async Task<int> Add(AccountToSaveDto entity)
         {
 
             if (await _unitOfWork.Account.AccountExists(entity.AccountNo))
@@ -28,10 +29,9 @@ namespace Service_Layer.Services
 
             _unitOfWork.Account.Add(entityToSave);
 
-            if (_unitOfWork.Complete() > 0)
-                return true;
+            _unitOfWork.Complete();
 
-            return false;
+            return entityToSave.Id;
 
         }
 
@@ -45,19 +45,25 @@ namespace Service_Layer.Services
 
         }
         
-        public async Task<IEnumerable<AccountDto>> GetAll()
+        // public async Task<IEnumerable<AccountDto>> GetAll()
+        // {
+        //     List<AccountDto> AccountDtos = new List<AccountDto>();
+        //     var Accountes = (await this._unitOfWork.Account.GetAll()).Where(x => x.IsVisible);
+        //     if (Accountes != null)
+        //     {
+        //         foreach (var Account in Accountes)
+        //         {
+        //             AccountDtos.Add(_mapper.Map<AccountDto>(Account));
+        //         }
+        //     }
+        //     return AccountDtos;
+        // }
+
+        public Task<PagedList<AccountDto>> GetAll(UserParam userParam)
         {
-            List<AccountDto> AccountDtos = new List<AccountDto>();
-            var Accountes = (await this._unitOfWork.Account.GetAll()).Where(x => x.IsVisible);
-            if (Accountes != null)
-            {
-                foreach (var Account in Accountes)
-                {
-                    AccountDtos.Add(_mapper.Map<AccountDto>(Account));
-                }
-            }
-            return AccountDtos;
+            throw new NotImplementedException();
         }
+
         public async Task<bool> Remove(int id)
         {
             var account = await this._unitOfWork.Account.Get(id);

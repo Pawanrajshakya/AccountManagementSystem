@@ -24,14 +24,16 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] Service_Layer.Helpers.UserParam userParam)
         {
             try
             {
-                var users = await _serviceManager.User.GetAll();
+                var users = await _serviceManager.User.GetAll(userParam);
                 if (users != null)
+                {
+                    Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
                     return Ok(users);
-
+                }
                 return NotFound();
             }
             catch (System.Exception e)
@@ -62,10 +64,13 @@ namespace API.Controllers
         {
             try
             {
-                if (await _serviceManager.User.Add(userDto))
-                    return StatusCode(201);
-                else
-                    return BadRequest();
+                var id = await _serviceManager.User.Add(userDto);
+                if (id > 0)
+                {
+                    var user = await _serviceManager.User.Get(id);
+                    return Ok(user);
+                }
+                return BadRequest();
             }
             catch (System.Exception e)
             {
@@ -112,10 +117,13 @@ namespace API.Controllers
             try
             {
                 UserToSaveDto userDto = new UserToSaveDto { Username = "pawanshakya", Password = "password", Name = "Sys Admin", UserRole = new System.Collections.Generic.List<int> { 1, 2 } };
-                if (await _serviceManager.User.Add(userDto))
-                    return StatusCode(201);
-                else
-                    return BadRequest();
+                var id = await _serviceManager.User.Add(userDto);
+                if (id > 0)
+                {
+                    var user = await _serviceManager.User.Get(id);
+                    return Ok(user);
+                }
+                return BadRequest(); ;
             }
             catch (System.Exception e)
             {

@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Service_Layer.Interface
 {
-
     public interface IDeleteService
     {
         Task<bool> Remove(int id);
@@ -12,7 +10,7 @@ namespace Service_Layer.Interface
 
     public interface IAddService<T> where T : class
     {
-        Task<bool> Add(T entity);
+        Task<int> Add(T entity);
     }
 
     public interface IUpdateService<T> where T : class
@@ -23,7 +21,5 @@ namespace Service_Layer.Interface
     public interface IGetService<T> where T : class
     {
         Task<T> Get(int id);
-
-        Task<IEnumerable<T>> GetAll();
     }
 }

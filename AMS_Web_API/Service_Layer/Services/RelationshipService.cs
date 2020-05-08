@@ -7,6 +7,7 @@ using Persistence_Layer.Interfaces;
 using Service_Layer.Dtos;
 using Service_Layer.Interface;
 using Persistence_Layer.Models;
+using Service_Layer.Helpers;
 
 namespace Service_Layer.Services
 {
@@ -16,7 +17,7 @@ namespace Service_Layer.Services
         {
         }
 
-        public async Task<bool> Add(RelationshipToSaveDto entity)
+        public async Task<int> Add(RelationshipToSaveDto entity)
         {
             if (await _unitOfWork.Relationship.RelationshipExists(entity.Description))
             {
@@ -27,10 +28,9 @@ namespace Service_Layer.Services
 
             _unitOfWork.Relationship.Add(Relationship);
 
-            if (_unitOfWork.Complete() > 0)
-                return true;
+            _unitOfWork.Complete();
 
-            return false;
+            return Relationship.Id;
         }
 
         public async Task<RelationshipDto> Get(int id)
@@ -42,18 +42,23 @@ namespace Service_Layer.Services
             return RelationshipDto;
         }
 
-        public async Task<IEnumerable<RelationshipDto>> GetAll()
+        // public async Task<IEnumerable<RelationshipDto>> GetAll()
+        // {
+        //     List<RelationshipDto> RelationshipDtos = new List<RelationshipDto>();
+        //     var Relationships = (await this._unitOfWork.Relationship.GetAll()).Where(x => x.IsVisible);
+        //     if (Relationships != null)
+        //     {
+        //         foreach (var Relationship in Relationships)
+        //         {
+        //             RelationshipDtos.Add(_mapper.Map<RelationshipDto>(Relationship));
+        //         }
+        //     }
+        //     return RelationshipDtos;
+        // }
+
+        public Task<PagedList<RelationshipDto>> GetAll(UserParam userParam)
         {
-            List<RelationshipDto> RelationshipDtos = new List<RelationshipDto>();
-            var Relationships = (await this._unitOfWork.Relationship.GetAll()).Where(x => x.IsVisible);
-            if (Relationships != null)
-            {
-                foreach (var Relationship in Relationships)
-                {
-                    RelationshipDtos.Add(_mapper.Map<RelationshipDto>(Relationship));
-                }
-            }
-            return RelationshipDtos;
+            throw new NotImplementedException();
         }
 
         public async Task<bool> Remove(int id)

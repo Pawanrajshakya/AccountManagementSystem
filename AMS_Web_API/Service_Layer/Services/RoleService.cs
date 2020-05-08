@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Persistence_Layer.Interfaces;
 using Persistence_Layer.Models;
 using Service_Layer.Dtos;
+using Service_Layer.Helpers;
 using Service_Layer.Interface;
 
 namespace Service_Layer.Services
@@ -16,7 +18,7 @@ namespace Service_Layer.Services
         {
         }
 
-        public async Task<bool> Add(RoleToSaveDto entity)
+        public async Task<int> Add(RoleToSaveDto entity)
         {
             if (await _unitOfWork.Role.RoleExists(entity.Description))
             {
@@ -27,10 +29,9 @@ namespace Service_Layer.Services
 
             _unitOfWork.Role.Add(role);
 
-            if (_unitOfWork.Complete() > 0)
-                return true;
+            _unitOfWork.Complete();
 
-            return false;
+            return role.Id;
         }
 
         public async Task<RoleDto> Get(int id)
@@ -41,19 +42,35 @@ namespace Service_Layer.Services
             RoleDto roleDto = _mapper.Map<RoleDto>(entity);
             return roleDto;
         }
-
-        public async Task<IEnumerable<RoleDto>> GetAll()
+        
+        public async Task<RolesDto> GetAll(RoleParam param)
         {
-            List<RoleDto> roleDtos = new List<RoleDto>();
-            var roles = (await this._unitOfWork.Role.GetAll()).Where(x => x.IsVisible);
+            PagedList<RoleDto> roleDtos = new PagedList<RoleDto>();
+
+            var queryable = _unitOfWork.Role.GetAll()
+                .Where(x => x.IsVisible && x.IsActive == param.IsActive);
+
+            if (!string.IsNullOrWhiteSpace(param.Description))
+                queryable = queryable.Where(x => x.Description.Contains(param.Description));
+
+            var roles = await PagedList<Role>.CreateAsync(queryable, param.PageNumber, param.PageSize);
+
             if (roles != null)
             {
                 foreach (var role in roles)
                 {
-                    roleDtos.Add(_mapper.Map<RoleDto>(role));
+                    RoleDto dto = _mapper.Map<RoleDto>(role);
+                    
+                    roleDtos.Add(dto);
                 }
             }
-            return roleDtos;
+            RolesDto rolesDto = new RolesDto();
+            rolesDto.Roles = roleDtos;
+            rolesDto.CurrentPage = roles.CurrentPage;
+            rolesDto.PageSize = roles.PageSize;
+            rolesDto.TotalCount = roles.TotalCount;
+            rolesDto.TotalPages = roles.TotalPages;
+            return rolesDto;
         }
 
         public async Task<bool> Remove(int id)

@@ -6,6 +6,7 @@ using AutoMapper;
 using Persistence_Layer.Interfaces;
 using Persistence_Layer.Models;
 using Service_Layer.Dtos;
+using Service_Layer.Helpers;
 using Service_Layer.Interface;
 
 namespace Service_Layer.Services
@@ -16,7 +17,7 @@ namespace Service_Layer.Services
         {
         }
 
-        public async Task<bool> Add(BusinessToSaveDto entity)
+        public async Task<int> Add(BusinessToSaveDto entity)
         {
 
             if (await _unitOfWork.Business.BusinessExists(entity.Name))
@@ -28,10 +29,9 @@ namespace Service_Layer.Services
 
             _unitOfWork.Business.Add(entityToSave);
 
-            if (_unitOfWork.Complete() > 0)
-                return true;
+            _unitOfWork.Complete();
 
-            return false;
+            return entityToSave.Id;
 
         }
 
@@ -45,19 +45,25 @@ namespace Service_Layer.Services
 
         }
         
-        public async Task<IEnumerable<BusinessDto>> GetAll()
+        // public async Task<IEnumerable<BusinessDto>> GetAll()
+        // {
+        //     List<BusinessDto> businessDtos = new List<BusinessDto>();
+        //     var businesses = (await this._unitOfWork.Business.GetAll()).Where(x => x.IsVisible);
+        //     if (businesses != null)
+        //     {
+        //         foreach (var business in businesses)
+        //         {
+        //             businessDtos.Add(_mapper.Map<BusinessDto>(business));
+        //         }
+        //     }
+        //     return businessDtos;
+        // }
+
+        public Task<PagedList<BusinessDto>> GetAll(UserParam userParam)
         {
-            List<BusinessDto> businessDtos = new List<BusinessDto>();
-            var businesses = (await this._unitOfWork.Business.GetAll()).Where(x => x.IsVisible);
-            if (businesses != null)
-            {
-                foreach (var business in businesses)
-                {
-                    businessDtos.Add(_mapper.Map<BusinessDto>(business));
-                }
-            }
-            return businessDtos;
+            throw new NotImplementedException();
         }
+
         public async Task<bool> Remove(int id)
         {
             var businessToDelete = await this._unitOfWork.Business.Get(id);

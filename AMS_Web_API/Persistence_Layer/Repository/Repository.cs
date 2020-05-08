@@ -38,11 +38,11 @@ namespace Persistence_Layer.Repository
             return _dbContext.Set<TEntity>().Where(predicate);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
             try
             {
-                return await _dbContext.Set<TEntity>().ToListAsync();
+                return  _dbContext.Set<TEntity>().AsQueryable();
             }
             catch (Exception e)
             {

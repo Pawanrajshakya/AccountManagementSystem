@@ -6,6 +6,7 @@ using AutoMapper;
 using Persistence_Layer.Interfaces;
 using Persistence_Layer.Models;
 using Service_Layer.Dtos;
+using Service_Layer.Helpers;
 using Service_Layer.Interface;
 
 namespace Service_Layer.Services
@@ -16,7 +17,7 @@ namespace Service_Layer.Services
         {
         }
 
-        public async Task<bool> Add(ClientToSaveDto entity)
+        public async Task<int> Add(ClientToSaveDto entity)
         {
             if (await _unitOfWork.Client.ClientExists(entity.Name))
             {
@@ -27,10 +28,9 @@ namespace Service_Layer.Services
 
             _unitOfWork.Client.Add(Client);
 
-            if (_unitOfWork.Complete() > 0)
-                return true;
+            _unitOfWork.Complete();
 
-            return false;
+            return Client.Id;
         }
 
         public async Task<ClientDto> Get(int id)
@@ -42,18 +42,23 @@ namespace Service_Layer.Services
             return ClientDto;
         }
 
-        public async Task<IEnumerable<ClientDto>> GetAll()
+        // public async Task<IEnumerable<ClientDto>> GetAll()
+        // {
+        //     List<ClientDto> ClientDtos = new List<ClientDto>();
+        //     var Clients = (await this._unitOfWork.Client.GetAll()).Where(x => x.IsVisible);
+        //     if (Clients != null)
+        //     {
+        //         foreach (var Client in Clients)
+        //         {
+        //             ClientDtos.Add(_mapper.Map<ClientDto>(Client));
+        //         }
+        //     }
+        //     return ClientDtos;
+        // }
+
+        public Task<PagedList<ClientDto>> GetAll(UserParam userParam)
         {
-            List<ClientDto> ClientDtos = new List<ClientDto>();
-            var Clients = (await this._unitOfWork.Client.GetAll()).Where(x => x.IsVisible);
-            if (Clients != null)
-            {
-                foreach (var Client in Clients)
-                {
-                    ClientDtos.Add(_mapper.Map<ClientDto>(Client));
-                }
-            }
-            return ClientDtos;
+            throw new NotImplementedException();
         }
 
         public async Task<bool> Remove(int id)

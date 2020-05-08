@@ -20,14 +20,17 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] Service_Layer.Helpers.RoleParam roleParam)
         {
             try
             {
-                var roles = await _serviceManager.Role.GetAll();
+                var roles = await _serviceManager.Role.GetAll(roleParam);
 
                 if (roles != null)
+                {
+                    Response.AddPaginationHeader(roles.CurrentPage, roles.PageSize, roles.TotalCount, roles.TotalPages);
                     return Ok(roles);
+                }
 
                 return NotFound();
             }
@@ -60,10 +63,13 @@ namespace API.Controllers
         {
             try
             {
-                if (await _serviceManager.Role.Add(roleDto))
-                    return StatusCode(201);
-                else
-                    return BadRequest();
+                var id = await _serviceManager.Role.Add(roleDto);
+                if (id > 0)
+                {
+                    var role = await _serviceManager.Role.Get(id);
+                    return Ok(role);
+                }
+                return BadRequest();
             }
             catch (System.Exception e)
             {

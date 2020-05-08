@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Persistence_Layer.Interfaces;
 using Persistence_Layer.Models;
 using Service_Layer.Dtos;
@@ -13,14 +13,11 @@ namespace Service_Layer.Services
 {
     public class UserService : BaseService, IUserService
     {
-
-        //private int i;
-
         public UserService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
         }
 
-        public async Task<bool> Add(UserToSaveDto entity)
+        public async Task<int> Add(UserToSaveDto entity)
         {
             byte[] passwordHash, passwordSalt;
 
@@ -49,10 +46,9 @@ namespace Service_Layer.Services
 
             _unitOfWork.User.Add(userToCreate);
 
-            if (_unitOfWork.Complete() > 0)
-                return true;
+            _unitOfWork.Complete();
 
-            return false;
+            return userToCreate.Id;
         }
 
         public async Task<UserDto> Get(int id)
@@ -68,21 +64,44 @@ namespace Service_Layer.Services
             return userDto;
         }
 
-        public async Task<IEnumerable<UserDto>> GetAll()
+        public async Task<UsersDto> GetAll(UserParam param)
         {
-            List<UserDto> userDtos = new List<UserDto>();
-            var users = (await this._unitOfWork.User.GetAll()).Where(x => x.IsVisible);
+            PagedList<UserDto> userDtos = new PagedList<UserDto>();
+
+            var queryable = _unitOfWork.User.GetAll()
+                .Include(x => x.UserRole)
+                .Where(x => x.IsVisible && x.IsActive == param.IsActive);
+
+            if (!string.IsNullOrWhiteSpace(param.UserName))
+                queryable = queryable.Where(x => x.UserName.Contains(param.UserName));
+
+            if (!string.IsNullOrWhiteSpace(param.Name))
+                queryable = queryable.Where(x => x.Name.Contains(param.Name));
+
+            if (param.Role > 0)
+                queryable = queryable.Where(r => r.UserRole.Any(x => x.RoleId == param.Role));
+
+            var users = await PagedList<User>.CreateAsync(queryable, param.PageNumber, param.PageSize);
+
             if (users != null)
             {
-
                 foreach (var user in users)
                 {
                     UserDto userDto = _mapper.Map<UserDto>(user);
-                    await GetUserRoles(user.Id, userDto);
+                    foreach (var role in user.UserRole)
+                    {
+                        userDto.UserRole.Add(role.RoleId);
+                    }
                     userDtos.Add(userDto);
                 }
             }
-            return userDtos;
+            UsersDto usersDto = new UsersDto();
+            usersDto.Users = userDtos;
+            usersDto.CurrentPage = users.CurrentPage;
+            usersDto.PageSize = users.PageSize;
+            usersDto.TotalCount = users.TotalCount;
+            usersDto.TotalPages = users.TotalPages;
+            return usersDto;
         }
 
         public async Task<bool> Remove(int id)

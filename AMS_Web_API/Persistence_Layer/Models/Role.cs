@@ -9,6 +9,6 @@ namespace Persistence_Layer.Models
             UserRole = new List<UserRole>();
         }
         public string Description { get; set; }
-        public List<UserRole> UserRole { get; set; }
+        public virtual ICollection<UserRole> UserRole { get; set; }
     }
 }
