@@ -1,0 +1,101 @@
+<section>
+  <form [formGroup]='signUpForm'
+        (ngSubmit)="onSubmit()"
+        fxLayout="column"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="10px">
+
+    <mat-form-field hintLabel="Maximum length is 70">
+      <input type="text"
+             #name
+             formControlName='name'
+             placeholder="Name"
+             matInput>
+      <mat-hint align="end">{{name.value.length}} /70</mat-hint>
+      <mat-error *ngIf="!signUpForm.get('name').valid && signUpForm.get('name').touched">
+        <mat-error *ngIf="signUpForm.get('name').errors['required']">Name is required.</mat-error>
+        <mat-error *ngIf="signUpForm.get('name').errors['minlength']">Minium length is 6.</mat-error>
+        <mat-error *ngIf="signUpForm.get('name').errors['maxlength']">Minium length is 70.</mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Maximum length is 50">
+      <input type="text"
+             #username
+             formControlName='username'
+             placeholder="Username"
+             matInput>
+      <mat-hint align="end">{{username.value.length}} /50</mat-hint>
+      <mat-error *ngIf="!signUpForm.get('username').valid && signUpForm.get('name').touched">
+        <mat-error *ngIf="signUpForm.get('username').errors['required']">Username is required.</mat-error>
+        <mat-error *ngIf="signUpForm.get('username').errors['minlength']">Minium length is 6.</mat-error>
+        <mat-error *ngIf="signUpForm.get('username').errors['maxlength']">Minium length is 70.</mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Maximum length is 50">
+      <input type="password"
+             #password
+             formControlName='password'
+             placeholder="Password"
+             matInput>
+      <mat-hint align="end">{{password.value.length}} /50</mat-hint>
+      <mat-error *ngIf="!signUpForm.get('password').valid && signUpForm.get('password').touched">
+        <mat-error *ngIf="signUpForm.get('password').errors['required']">Password is required.</mat-error>
+        <mat-error *ngIf="signUpForm.get('password').errors['minlength']">Minium length is 8.</mat-error>
+        <mat-error *ngIf="signUpForm.get('password').errors['maxlength']">Minium length is 50.</mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field hintLabel="Maximum length is 100">
+      <input type="email"
+             #email
+             formControlName='email'
+             placeholder="Email"
+             matInput>
+      <mat-hint align="end">{{email.value.length}} /50</mat-hint>
+      <mat-error *ngIf="!signUpForm.get('email').valid && signUpForm.get('email').touched">
+        <mat-error *ngIf="signUpForm.get('email').errors['required']">Email is required.</mat-error>
+        <mat-error *ngIf="signUpForm.get('email').errors['maxlength']">Minium length is 70.</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <!-- <mat-form-field>
+      <mat-label>Active Date</mat-label>
+      <input matInput
+             [matDatepicker]="picker"
+             [min]="minDate">
+      <mat-datepicker-toggle matSuffix
+                             [for]="picker">
+        <i class="fa fa-calender"></i>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field> -->
+    <mat-form-field>
+      <mat-label>Role</mat-label>
+      <mat-select multiple
+                  formControlName="selectedUserRole">
+        <mat-option *ngFor="let role of roles"
+                    [value]="role.id">
+          {{role.description}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="!signUpForm.get('selectedUserRole').valid && signUpForm.get('selectedUserRole').touched">
+        <mat-error *ngIf="signUpForm.get('selectedUserRole').errors['required']">Role is required.</mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <div fxLayoutAlign="start">
+      <mat-checkbox formControlName='isActive'
+                    labelPosition="before"
+                    color="primary">Is Active</mat-checkbox>
+    </div>
+    <div fxLayout="row"
+         fxLayoutGap="10px">
+      <button mat-raised-button
+              color="primary"
+              type="submit"><i class="fa fa-sign-in"></i> Submit</button>
+      <button mat-raised-button
+              class="accent">Cancel</button>
+    </div>
+  </form>
+</section>

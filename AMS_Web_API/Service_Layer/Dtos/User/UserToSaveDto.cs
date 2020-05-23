@@ -18,9 +18,11 @@ namespace Service_Layer.Dtos
         public string Password { get; set; }
         [Required]
         public string Name { get; set; }
-        public string Gender { get; set; }
+        //public string Gender { get; set; }
         public string Email { get; set; }
         [Required]
         public List<int> UserRole { get; set; }
+        public bool IsActive { get; set; }
+        //ActiveDate
     }
 }
