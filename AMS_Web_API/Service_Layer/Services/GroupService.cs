@@ -57,7 +57,7 @@ namespace Service_Layer.Services
         //     return groupDtos;
         // }
 
-        public Task<PagedList<GroupDto>> GetAll(UserParam userParam)
+        public Task<PagedList<GroupDto>> GetAll(Param parameters)
         {
             throw new NotImplementedException();
         }

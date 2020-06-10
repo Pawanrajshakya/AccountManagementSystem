@@ -324,11 +324,11 @@ namespace Persistence_Layer.Migrations
                             Address1 = "Address 1",
                             Address2 = "Address 2",
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 4, 27, 15, 32, 58, 60, DateTimeKind.Local).AddTicks(6480),
+                            CreatedDate = new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(4200),
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 4, 27, 15, 32, 58, 60, DateTimeKind.Local).AddTicks(6500),
+                            LastModifiedDate = new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(4220),
                             Name = "Business Name",
                             State = "zz",
                             ZipCode = "zzzzz"
@@ -424,12 +424,12 @@ namespace Persistence_Layer.Migrations
                         {
                             Id = 1,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 4, 27, 15, 32, 58, 61, DateTimeKind.Local).AddTicks(460),
+                            CreatedDate = new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(7760),
                             Description = "New Group",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 4, 27, 15, 32, 58, 61, DateTimeKind.Local).AddTicks(480),
+                            LastModifiedDate = new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(7770),
                             Order = 0
                         });
                 });
@@ -516,34 +516,34 @@ namespace Persistence_Layer.Migrations
                         {
                             Id = 1,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 4, 27, 15, 32, 58, 46, DateTimeKind.Local).AddTicks(7380),
+                            CreatedDate = new DateTime(2020, 6, 9, 15, 14, 44, 889, DateTimeKind.Local).AddTicks(3110),
                             Description = "Admin",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 4, 27, 15, 32, 58, 58, DateTimeKind.Local).AddTicks(9090)
+                            LastModifiedDate = new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(5800)
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2450),
+                            CreatedDate = new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9510),
                             Description = "User",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2490)
+                            LastModifiedDate = new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9540)
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2560),
+                            CreatedDate = new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9610),
                             Description = "Viewer",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2560)
+                            LastModifiedDate = new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9620)
                         });
                 });
 
@@ -665,9 +665,6 @@ namespace Persistence_Layer.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -680,14 +677,23 @@ namespace Persistence_Layer.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("LastPasswordChangedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PasswordChangedCount")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -745,9 +751,6 @@ namespace Persistence_Layer.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -760,14 +763,23 @@ namespace Persistence_Layer.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("LastPasswordChangedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PasswordChangedCount")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("RowVersion")
                         .HasColumnType("varbinary(max)");

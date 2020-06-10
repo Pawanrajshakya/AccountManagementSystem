@@ -13,8 +13,10 @@ namespace Service_Layer.Services
 {
     public class UserService : BaseService, IUserService
     {
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        private readonly IRoleService _roleService;
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IRoleService roleService) : base(unitOfWork, mapper)
         {
+            _roleService = roleService;
         }
 
         public async Task<int> Add(UserToSaveDto entity)
@@ -26,10 +28,10 @@ namespace Service_Layer.Services
 
             User userToCreate = _mapper.Map<User>(entity);
 
-            CreatePasswordHash(entity.Password, out passwordHash, out passwordSalt);
+            CreatePasswordHash(entity.Username, out passwordHash, out passwordSalt);
             userToCreate.PasswordHash = passwordHash;
             userToCreate.PasswordSalt = passwordSalt;
-            userToCreate.IsActive = true;
+            // userToCreate.IsActive = true;
             userToCreate.IsVisible = true;
             if (CurrentUser.User != null)
                 userToCreate.CreatedBy = CurrentUser.User.Id;
@@ -58,30 +60,58 @@ namespace Service_Layer.Services
                 return null;
 
             UserDto userDto = _mapper.Map<UserDto>(user);
-
             await GetUserRoles(user.Id, userDto);
 
             return userDto;
         }
 
-        public async Task<UsersDto> GetAll(UserParam param)
+        public async Task<UsersDto> GetAll(Param parameter)
         {
             PagedList<UserDto> userDtos = new PagedList<UserDto>();
 
             var queryable = _unitOfWork.User.GetAll()
                 .Include(x => x.UserRole)
-                .Where(x => x.IsVisible && x.IsActive == param.IsActive);
+                .Where(x => x.IsVisible && x.IsActive == parameter.IsActive);
 
-            if (!string.IsNullOrWhiteSpace(param.UserName))
-                queryable = queryable.Where(x => x.UserName.Contains(param.UserName));
+            switch (parameter.SearchBy.ToLower())
+            {
+                case "username":
+                    queryable = queryable.Where(x => x.UserName.Contains(parameter.SearchText));
+                    break;
+                case "name":
+                    queryable = queryable.Where(x => x.Name.Contains(parameter.SearchText));
+                    break;
+            }
 
-            if (!string.IsNullOrWhiteSpace(param.Name))
-                queryable = queryable.Where(x => x.Name.Contains(param.Name));
+            switch (parameter.SortBy.ToLower())
+            {
+                case "username":
+                    switch (parameter.SortDirection.ToLower())
+                    {
+                        case "desc":
+                            queryable = queryable.OrderByDescending(x => x.UserName);
+                            break;
+                        default:
+                            queryable = queryable.OrderBy(x => x.UserName);
+                            break;
 
-            if (param.Role > 0)
-                queryable = queryable.Where(r => r.UserRole.Any(x => x.RoleId == param.Role));
+                    }
+                    break;
 
-            var users = await PagedList<User>.CreateAsync(queryable, param.PageNumber, param.PageSize);
+                case "name":
+                    switch (parameter.SortDirection.ToLower())
+                    {
+                        case "desc":
+                            queryable = queryable.OrderByDescending(x => x.Name);
+                            break;
+                        default:
+                            queryable = queryable.OrderBy(x => x.Name);
+                            break;
+                    }
+                    break;
+            }
+
+            var users = await PagedList<User>.CreateAsync(queryable, parameter.PageNumber, parameter.PageSize);
 
             if (users != null)
             {
@@ -90,7 +120,7 @@ namespace Service_Layer.Services
                     UserDto userDto = _mapper.Map<UserDto>(user);
                     foreach (var role in user.UserRole)
                     {
-                        userDto.UserRole.Add(role.RoleId);
+                        userDto.UserRole.Add(await _roleService.Get(role.RoleId));
                     }
                     userDtos.Add(userDto);
                 }
@@ -147,7 +177,7 @@ namespace Service_Layer.Services
 
             entityToUpdate.UserName = entity.Username;
             entityToUpdate.IsActive = entity.IsActive;
-            entityToUpdate.Gender = entity.Gender;
+            entityToUpdate.Phone = entity.Phone;
             entityToUpdate.Email = entity.Email;
             entityToUpdate.Name = entity.Name;
 
@@ -158,6 +188,7 @@ namespace Service_Layer.Services
 
             return false;
         }
+
         public async Task<UserDto> Login(string username, string password)
         {
             var user = await _unitOfWork.User.Find(x => x.UserName == username);
@@ -178,11 +209,12 @@ namespace Service_Layer.Services
         private async Task GetUserRoles(int id, UserDto userDto)
         {
             var userRoles = await _unitOfWork.User.GetUserRoles(id);
+
             if (userRoles.Count() > 0)
             {
-                foreach (var userRole in userRoles)
+                foreach (var role in userRoles)
                 {
-                    userDto.UserRole.Add(userRole.RoleId);
+                    userDto.UserRole.Add(await _roleService.Get(role.RoleId));
                 }
             }
         }
@@ -228,6 +260,29 @@ namespace Service_Layer.Services
             await GetUserRoles(user.Id, userDto);
 
             return userDto;
+        }
+
+        public async Task<bool> SetPassword(int id, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+
+            var entityToUpdate = await this._unitOfWork.User.Get(id);
+
+            if (entityToUpdate == null)
+                throw new Exception("Not Found.");
+
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            entityToUpdate.PasswordHash = passwordHash;
+            entityToUpdate.PasswordSalt = passwordSalt;
+            entityToUpdate.LastPasswordChangedOn = DateTime.Now;
+            entityToUpdate.PasswordChangedCount = entityToUpdate.PasswordChangedCount + 1;
+
+            _unitOfWork.User.Update(entityToUpdate);
+
+            if (_unitOfWork.Complete() > 0)
+                return true;
+
+            return false;
         }
     }
 }

@@ -1,3 +1,4 @@
+using API.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Service_Layer.Interface;
@@ -46,8 +47,7 @@ namespace API.Controllers
         }
 
 
-        protected IActionResult HandleException(Exception exception)
-        {
+        protected IActionResult HandleException(Exception exception) =>
             // if (exception.GetType().Name == "DbUpdateException")
             // {
             //     return BadRequest(exception.InnerException.InnerException);
@@ -71,8 +71,8 @@ namespace API.Controllers
             //     return BadRequest(stringBuilder.ToString());
             // }
             // return InternalServerError(exception);
-            return BadRequest(exception.Message);
-        }
+            
+            BadRequest(new ErrorMessageDto { Message = exception.Message });
 
         protected static T GetSortBy<T>(string sortBy, T defaultSortBy)
         {

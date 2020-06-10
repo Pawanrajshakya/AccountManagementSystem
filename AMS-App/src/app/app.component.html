@@ -1,2 +1,58 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  <div fxFlex
+       fxLayout="row"
+       fxLayoutGap="10px">
+    <div><i class="fa fa-bars"
+         (click)="sidenav.toggle()"></i></div>
+    <div> <a routerLink="/">AMS</a></div>
+  </div>
+  <div fxFlex
+       fxLayout
+       fxLayoutAlign="flex-end">
+    <ul fxLayout
+        fxLayoutGap="10px"
+        class="navigation-items">
+        <li *ngIf="usernameToDisplay?.length > 0" >Welcome {{usernameToDisplay}}</li>
+
+      <li><a routerLink="/login"
+           *ngIf="!isLoggedIn">Sign In <i class="fa fa-sign-in"></i></a></li>
+      <li><a routerLink="/login"
+           (click)="onSignOut()"
+           *ngIf="!!isLoggedIn">Sign Out <i class="fa fa-sign-out"></i></a></li>
+    </ul>
+  </div>
+</mat-toolbar>
+
+<mat-drawer-container autosize>
+  <mat-drawer #sidenav
+              role="heading"
+              mode="side"
+              opened>
+    <mat-nav-list *ngIf="!!isLoggedIn">
+      <mat-accordion displayMode="flat"
+                     #accordion="matAccordion">
+        <div *ngFor="let menu of myMenu">
+          <div *ngIf="!menu.hasSubMenu">
+            <a mat-list-item
+               [routerLink]="menu.link"> <i [class]="menu.icon"></i><span
+                    class="mat-list-item-text">{{menu.title}}</span></a>
+          </div>
+          <div *ngIf="menu.hasSubMenu">
+            <a mat-list-item
+               *ngFor="let sub of menu.subMenu"
+               [routerLink]="sub.link"
+               routerLinkActive="active"
+               [disabled]="sub.isDisabled"
+               [routerLinkActiveOptions]="{exact: true}">
+              <i [class]="sub.icon"></i>&nbsp;{{sub.title}}</a>
+          </div>
+        </div>
+      </mat-accordion>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>

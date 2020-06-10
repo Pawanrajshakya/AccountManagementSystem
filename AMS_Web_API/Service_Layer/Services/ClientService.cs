@@ -56,7 +56,7 @@ namespace Service_Layer.Services
         //     return ClientDtos;
         // }
 
-        public Task<PagedList<ClientDto>> GetAll(UserParam userParam)
+        public Task<PagedList<ClientDto>> GetAll(Param parameters)
         {
             throw new NotImplementedException();
         }

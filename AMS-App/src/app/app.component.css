@@ -1,0 +1,58 @@
+mat-toolbar {
+  height: 8%;
+}
+
+mat-drawer-container {
+  height: 92%;
+}
+
+mat-drawer,
+mat-drawer-content {
+  height: 100%;
+}
+
+mat-drawer {
+  width: 200px;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+mat-drawer div a {
+  color: black;
+}
+
+a:hover,
+a:active {
+  color: lightgray;
+}
+
+.navigation-items {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+mat-selection-list mat-list-option a {
+  text-decoration: none;
+  color: black;
+}
+
+mat-nav-list a:hover,
+a:active {
+  color: blueviolet;
+}
+
+.nav-link {
+  color: blueviolet;
+}
+
+.submenu span{
+  font-weight: 100;
+}

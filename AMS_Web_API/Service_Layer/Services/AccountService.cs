@@ -59,7 +59,7 @@ namespace Service_Layer.Services
         //     return AccountDtos;
         // }
 
-        public Task<PagedList<AccountDto>> GetAll(UserParam userParam)
+        public Task<PagedList<AccountDto>> GetAll(Param parameters)
         {
             throw new NotImplementedException();
         }

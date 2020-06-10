@@ -43,34 +43,35 @@ namespace Service_Layer.Services
             return roleDto;
         }
         
-        public async Task<RolesDto> GetAll(RoleParam param)
+        public async Task<RolesDto> GetAll(Param parameters)
         {
-            PagedList<RoleDto> roleDtos = new PagedList<RoleDto>();
+             throw new NotImplementedException();
+            // PagedList<RoleDto> roleDtos = new PagedList<RoleDto>();
 
-            var queryable = _unitOfWork.Role.GetAll()
-                .Where(x => x.IsVisible && x.IsActive == param.IsActive);
+            // var queryable = _unitOfWork.Role.GetAll()
+            //     .Where(x => x.IsVisible && x.IsActive == parameters.IsActive);
 
-            if (!string.IsNullOrWhiteSpace(param.Description))
-                queryable = queryable.Where(x => x.Description.Contains(param.Description));
+            // if (!string.IsNullOrWhiteSpace(parameters.Description))
+            //     queryable = queryable.Where(x => x.Description.Contains(parameters.Description));
 
-            var roles = await PagedList<Role>.CreateAsync(queryable, param.PageNumber, param.PageSize);
+            // var roles = await PagedList<Role>.CreateAsync(queryable, parameters.PageNumber, parameters.PageSize);
 
-            if (roles != null)
-            {
-                foreach (var role in roles)
-                {
-                    RoleDto dto = _mapper.Map<RoleDto>(role);
+            // if (roles != null)
+            // {
+            //     foreach (var role in roles)
+            //     {
+            //         RoleDto dto = _mapper.Map<RoleDto>(role);
                     
-                    roleDtos.Add(dto);
-                }
-            }
-            RolesDto rolesDto = new RolesDto();
-            rolesDto.Roles = roleDtos;
-            rolesDto.CurrentPage = roles.CurrentPage;
-            rolesDto.PageSize = roles.PageSize;
-            rolesDto.TotalCount = roles.TotalCount;
-            rolesDto.TotalPages = roles.TotalPages;
-            return rolesDto;
+            //         roleDtos.Add(dto);
+            //     }
+            // }
+            // RolesDto rolesDto = new RolesDto();
+            // rolesDto.Roles = roleDtos;
+            // rolesDto.CurrentPage = roles.CurrentPage;
+            // rolesDto.PageSize = roles.PageSize;
+            // rolesDto.TotalCount = roles.TotalCount;
+            // rolesDto.TotalPages = roles.TotalPages;
+            // return rolesDto;
         }
 
         public async Task<bool> Remove(int id)

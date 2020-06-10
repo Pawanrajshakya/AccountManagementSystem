@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Service_Layer.Dtos;
+using Service_Layer.Helpers;
 using Service_Layer.Interface;
 
 namespace API.Controllers
@@ -20,11 +21,11 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] Service_Layer.Helpers.RoleParam roleParam)
+        public async Task<IActionResult> Get([FromQuery] Param paramerters)
         {
             try
             {
-                var roles = await _serviceManager.Role.GetAll(roleParam);
+                var roles = await _serviceManager.Role.GetAll(paramerters);
 
                 if (roles != null)
                 {

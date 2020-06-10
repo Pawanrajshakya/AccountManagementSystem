@@ -9,7 +9,7 @@ namespace Persistence_Layer.Models
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
         public string Name { get; set; }
-        public string Gender { get; set; }
+        public string Phone { get; set; }
         public string Email { get; set; }
         public string UserRole { get; set; }
         public int CreatedBy { get; set; }
@@ -19,5 +19,7 @@ namespace Persistence_Layer.Models
         public bool IsVisible { get; set; }
         public bool IsActive { get; set; }
         public byte[] RowVersion { get; set; }
+        public int PasswordChangedCount { get; set; }
+        public System.DateTime LastPasswordChangedOn { get; set; }
     }
 }

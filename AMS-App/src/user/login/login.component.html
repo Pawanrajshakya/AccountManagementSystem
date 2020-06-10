@@ -1,4 +1,37 @@
-<div class="container">
+<section>
+  <form [formGroup]='loginForm'
+        (ngSubmit)="onSubmit()"
+        fxLayout="column"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="10px">
+    <mat-form-field>
+      <input type="text"
+             #username
+             formControlName='username'
+             placeholder="Username"
+             matInput>
+      <mat-error *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched">
+        <mat-error *ngIf="loginForm.get('username').errors['required']">Username is required.</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password"
+             #password
+             formControlName='password'
+             placeholder="Password"
+             matInput>
+      <mat-error *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
+        <mat-error *ngIf="loginForm.get('password').errors['required']">Password is required.</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <div fxLayout="row">
+      <button mat-raised-button [disabled]="!loginForm.valid"
+              color="primary"
+              type="submit">Login</button>
+    </div>
+  </form>
+</section>
+<!-- <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <form [formGroup]='loginForm'
@@ -41,4 +74,4 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->

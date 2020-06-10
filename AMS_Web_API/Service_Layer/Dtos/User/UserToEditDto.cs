@@ -14,7 +14,7 @@ namespace Service_Layer.Dtos
         public string Username { get; set; }
         [Required]
         public string Name { get; set; }
-        public string Gender { get; set; }
+        public string Phone { get; set; }
         public string Email { get; set; }
         [Required]
         public List<int> UserRole { get; set; }

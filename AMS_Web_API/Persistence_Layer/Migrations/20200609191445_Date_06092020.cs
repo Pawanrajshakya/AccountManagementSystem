@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence_Layer.Migrations
 {
-    public partial class InitalCreateDB : Migration
+    public partial class Date_06092020 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -156,7 +156,7 @@ namespace Persistence_Layer.Migrations
                     PasswordHash = table.Column<byte[]>(nullable: true),
                     PasswordSalt = table.Column<byte[]>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Gender = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     UserRole = table.Column<string>(nullable: true),
                     CreatedBy = table.Column<int>(nullable: false),
@@ -165,7 +165,9 @@ namespace Persistence_Layer.Migrations
                     LastModifiedDate = table.Column<DateTime>(nullable: false),
                     IsVisible = table.Column<bool>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    RowVersion = table.Column<byte[]>(nullable: true)
+                    RowVersion = table.Column<byte[]>(nullable: true),
+                    PasswordChangedCount = table.Column<int>(nullable: false),
+                    LastPasswordChangedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,8 +191,10 @@ namespace Persistence_Layer.Migrations
                     PasswordHash = table.Column<byte[]>(nullable: true),
                     PasswordSalt = table.Column<byte[]>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Gender = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    PasswordChangedCount = table.Column<int>(nullable: false),
+                    LastPasswordChangedOn = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -397,21 +401,21 @@ namespace Persistence_Layer.Migrations
             migrationBuilder.InsertData(
                 table: "Businesses",
                 columns: new[] { "Id", "Address1", "Address2", "CreatedBy", "CreatedDate", "Description", "IsActive", "IsVisible", "LastModifiedBy", "LastModifiedDate", "Name", "State", "ZipCode" },
-                values: new object[] { 1, "Address 1", "Address 2", 0, new DateTime(2020, 4, 27, 15, 32, 58, 60, DateTimeKind.Local).AddTicks(6480), null, true, true, 0, new DateTime(2020, 4, 27, 15, 32, 58, 60, DateTimeKind.Local).AddTicks(6500), "Business Name", "zz", "zzzzz" });
+                values: new object[] { 1, "Address 1", "Address 2", 0, new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(4200), null, true, true, 0, new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(4220), "Business Name", "zz", "zzzzz" });
 
             migrationBuilder.InsertData(
                 table: "Groups",
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "Description", "IsActive", "IsVisible", "LastModifiedBy", "LastModifiedDate", "Order" },
-                values: new object[] { 1, 0, new DateTime(2020, 4, 27, 15, 32, 58, 61, DateTimeKind.Local).AddTicks(460), "New Group", true, true, 0, new DateTime(2020, 4, 27, 15, 32, 58, 61, DateTimeKind.Local).AddTicks(480), 0 });
+                values: new object[] { 1, 0, new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(7760), "New Group", true, true, 0, new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(7770), 0 });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "Description", "IsActive", "IsVisible", "LastModifiedBy", "LastModifiedDate" },
                 values: new object[,]
                 {
-                    { 1, 0, new DateTime(2020, 4, 27, 15, 32, 58, 46, DateTimeKind.Local).AddTicks(7380), "Admin", true, true, 0, new DateTime(2020, 4, 27, 15, 32, 58, 58, DateTimeKind.Local).AddTicks(9090) },
-                    { 2, 0, new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2450), "User", true, true, 0, new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2490) },
-                    { 3, 0, new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2560), "Viewer", true, true, 0, new DateTime(2020, 4, 27, 15, 32, 58, 59, DateTimeKind.Local).AddTicks(2560) }
+                    { 1, 0, new DateTime(2020, 6, 9, 15, 14, 44, 889, DateTimeKind.Local).AddTicks(3110), "Admin", true, true, 0, new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(5800) },
+                    { 2, 0, new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9510), "User", true, true, 0, new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9540) },
+                    { 3, 0, new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9610), "Viewer", true, true, 0, new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9620) }
                 });
 
             migrationBuilder.CreateIndex(

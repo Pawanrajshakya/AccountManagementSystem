@@ -10,6 +10,7 @@ namespace Service_Layer.Interface
         // Task<UserDto> Register(User user, string password);
         Task<UserDto> Login(string username, string password);
         Task<UserDto> FindBy(string username);
-        Task<UsersDto> GetAll(UserParam userParam);
+        Task<UsersDto> GetAll(Param parameter);
+        Task<bool> SetPassword(int id, string password);
     }
 }

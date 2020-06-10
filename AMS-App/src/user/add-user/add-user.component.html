@@ -26,7 +26,7 @@
              placeholder="Username"
              matInput>
       <mat-hint align="end">{{username.value.length}} /50</mat-hint>
-      <mat-error *ngIf="!signUpForm.get('username').valid && signUpForm.get('name').touched">
+      <mat-error *ngIf="!signUpForm.get('username').valid && signUpForm.get('username').touched">
         <mat-error *ngIf="signUpForm.get('username').errors['required']">Username is required.</mat-error>
         <mat-error *ngIf="signUpForm.get('username').errors['minlength']">Minium length is 6.</mat-error>
         <mat-error *ngIf="signUpForm.get('username').errors['maxlength']">Minium length is 70.</mat-error>
@@ -56,6 +56,7 @@
       <mat-hint align="end">{{email.value.length}} /50</mat-hint>
       <mat-error *ngIf="!signUpForm.get('email').valid && signUpForm.get('email').touched">
         <mat-error *ngIf="signUpForm.get('email').errors['required']">Email is required.</mat-error>
+        <mat-error *ngIf="signUpForm.get('email').errors['email']">Valid email address is required.</mat-error>
         <mat-error *ngIf="signUpForm.get('email').errors['maxlength']">Minium length is 70.</mat-error>
       </mat-error>
     </mat-form-field>
@@ -74,7 +75,7 @@
       <mat-label>Role</mat-label>
       <mat-select multiple
                   formControlName="selectedUserRole">
-        <mat-option *ngFor="let role of roles"
+        <mat-option *ngFor="let role of roles" 
                     [value]="role.id">
           {{role.description}}
         </mat-option>
@@ -93,8 +94,8 @@
          fxLayoutGap="10px">
       <button mat-raised-button
               color="primary"
-              type="submit"><i class="fa fa-sign-in"></i> Submit</button>
-      <button mat-raised-button
+              type="submit">Save</button>
+      <button mat-raised-button type="button" (click)="onCancel()"
               class="accent">Cancel</button>
     </div>
   </form>

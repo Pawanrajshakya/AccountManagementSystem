@@ -140,7 +140,7 @@ CREATE TABLE [Users] (
     [PasswordHash] varbinary(max) NULL,
     [PasswordSalt] varbinary(max) NULL,
     [Name] nvarchar(max) NULL,
-    [Gender] nvarchar(max) NULL,
+    [Phone] nvarchar(max) NULL,
     [Email] nvarchar(max) NULL,
     CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
 );
