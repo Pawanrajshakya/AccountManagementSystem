@@ -11,11 +11,15 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppComponent } from 'src/app/app.component';
 import { HomeComponent } from 'src/home/home.component';
 import { HeaderComponent } from 'src/header/header.component';
-import { AddUserComponent } from 'src/user/add-user/add-user.component';
-import { LoginComponent } from 'src/User/login/login.component';
+import { AddUserComponent } from 'src/user/add/add.component';
+import { LoginComponent } from 'src/auth/login/login.component';
 import { AuthService } from 'src/_services/auth.service';
-import { ListComponent } from 'src/user/list/list.component';
+import { ListUserComponent } from 'src/user/list/list.component';
 import { AlertService } from 'src/_services/alert.service';
+import { ChangePasswordComponent } from 'src/auth/changePassword/changePassword.component';
+import { DeleteUserComponent } from 'src/user/delete/delete.component';
+import { ErrorInterceptorProvider } from 'src/_services/error.interceptor';
+import { ViewUserComponent } from 'src/user/view/view.component';
 
 
 
@@ -26,7 +30,10 @@ import { AlertService } from 'src/_services/alert.service';
       HeaderComponent,
       AddUserComponent,
       LoginComponent,
-      ListComponent
+      ListUserComponent,
+      ChangePasswordComponent,
+      DeleteUserComponent,
+      ViewUserComponent
    ],
    imports: [
       BrowserModule,
@@ -37,7 +44,7 @@ import { AlertService } from 'src/_services/alert.service';
       FlexLayoutModule,
       HttpClientModule,
       JwtModule.forRoot({
-         config:{
+         config: {
             tokenGetter: getToken,
             whitelistedDomains: ['localhost:5000'],
             blacklistedRoutes: []
@@ -45,11 +52,14 @@ import { AlertService } from 'src/_services/alert.service';
       })
    ],
    providers: [
-      AuthService, AlertService
+      AuthService, AlertService, ErrorInterceptorProvider
    ],
    bootstrap: [
       AppComponent
-   ]
+   ],
+   entryComponents: [
+      ChangePasswordComponent,
+      DeleteUserComponent]
 })
 export class AppModule { }
 

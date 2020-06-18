@@ -11,12 +11,9 @@ mat-drawer-content {
   height: 100%;
 }
 
-mat-drawer {
-  width: 200px;
-}
-
 li {
   list-style: none;
+  font-size: large;
 }
 
 a {
@@ -53,6 +50,6 @@ a:active {
   color: blueviolet;
 }
 
-.submenu span{
-  font-weight: 100;
+.mat-list-item-text {
+  margin-left: 10px;
 }

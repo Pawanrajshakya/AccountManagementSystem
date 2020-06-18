@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -71,7 +72,7 @@ namespace Service_Layer.Services
 
             var queryable = _unitOfWork.User.GetAll()
                 .Include(x => x.UserRole)
-                .Where(x => x.IsVisible && x.IsActive == parameter.IsActive);
+                .Where(x => x.IsVisible == true);
 
             switch (parameter.SearchBy.ToLower())
             {
@@ -91,8 +92,11 @@ namespace Service_Layer.Services
                         case "desc":
                             queryable = queryable.OrderByDescending(x => x.UserName);
                             break;
-                        default:
+                        case "asc":
                             queryable = queryable.OrderBy(x => x.UserName);
+                            break;
+                        default:
+                            queryable = queryable.OrderByDescending(x => x.CreatedDate);
                             break;
 
                     }
@@ -104,8 +108,25 @@ namespace Service_Layer.Services
                         case "desc":
                             queryable = queryable.OrderByDescending(x => x.Name);
                             break;
-                        default:
+                        case "asc":
                             queryable = queryable.OrderBy(x => x.Name);
+                            break;
+                        default:
+                            queryable = queryable.OrderByDescending(x => x.CreatedDate);
+                            break;
+                    }
+                    break;
+                case "createddate":
+                    switch (parameter.SortDirection.ToLower())
+                    {
+                        case "desc":
+                            queryable = queryable.OrderByDescending(x => x.CreatedDate);
+                            break;
+                        case "asc":
+                            queryable = queryable.OrderBy(x => x.CreatedDate);
+                            break;
+                        default:
+                            queryable = queryable.OrderByDescending(x => x.CreatedDate);
                             break;
                     }
                     break;
@@ -170,10 +191,23 @@ namespace Service_Layer.Services
 
         public async Task<bool> Update(int id, UserToEditDto entity)
         {
-            var entityToUpdate = await this._unitOfWork.User.Get(id);
+            var entityToUpdate = await this._unitOfWork.User.GetAll()
+            .Include(x => x.UserRole)
+            .Where(x => x.Id == id)
+            .SingleOrDefaultAsync();
 
             if (entityToUpdate == null)
                 throw new Exception("Not Found.");
+
+            entityToUpdate.UserRole = new List<UserRole>();
+
+            if (entity.UserRole.Count() > 0)
+            {
+                foreach (var userRole in entity.UserRole)
+                {
+                    entityToUpdate.UserRole.Add(new UserRole { RoleId = userRole, UserId = id });
+                }
+            }
 
             entityToUpdate.UserName = entity.Username;
             entityToUpdate.IsActive = entity.IsActive;
@@ -182,6 +216,7 @@ namespace Service_Layer.Services
             entityToUpdate.Name = entity.Name;
 
             _unitOfWork.User.Update(entityToUpdate);
+
 
             if (_unitOfWork.Complete() > 0)
                 return true;
@@ -208,11 +243,11 @@ namespace Service_Layer.Services
 
         private async Task GetUserRoles(int id, UserDto userDto)
         {
-            var userRoles = await _unitOfWork.User.GetUserRoles(id);
+            var user = await _unitOfWork.User.GetUserRoles(id);
 
-            if (userRoles.Count() > 0)
+            if (user != null && user.UserRole.Count() > 0)
             {
-                foreach (var role in userRoles)
+                foreach (var role in user.UserRole)
                 {
                     userDto.UserRole.Add(await _roleService.Get(role.RoleId));
                 }

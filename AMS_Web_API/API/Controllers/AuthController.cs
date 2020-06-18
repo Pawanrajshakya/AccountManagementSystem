@@ -62,29 +62,6 @@ namespace API.Controllers
             });
         }
 
-        [HttpPost("changepassword")]
-        public async Task<IActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
-        {
-            try
-            {
-                var user = await this._serviceManager.User.Login(changePasswordDto.Username, changePasswordDto.OldPassword);
-
-                if (user == null)
-                    return BadRequest(new ErrorMessageDto { Message = "Username or password does not matched." });
-
-                var result = await this._serviceManager.User.SetPassword(user.Id, changePasswordDto.NewPassword);
-
-                if (result)
-                    return Ok();
-
-                return BadRequest(new ErrorMessageDto { Message = "Internal Error. Unable to change your password." });
-            }
-            catch (System.Exception e)
-            {
-                return HandleException(e);
-            }
-        }
-
         private void GetToken(UserDto user, out JwtSecurityTokenHandler tokenHandler, out SecurityToken token)
         {
             var userRoles = string.Join(",", user.UserRole);

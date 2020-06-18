@@ -17,6 +17,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [MatButtonModule, MatInputModule,
@@ -27,7 +28,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatExpansionModule, MatMenuModule,
     MatTableModule, MatPaginatorModule,
     MatSortModule, MatSnackBarModule,
-    MatProgressBarModule, MatTooltipModule],
+    MatProgressBarModule, MatTooltipModule,
+    MatDialogModule],
   exports: [MatButtonModule, MatInputModule,
     MatFormFieldModule, MatDatepickerModule,
     MatNativeDateModule, MatCheckboxModule,
@@ -36,6 +38,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatExpansionModule, MatMenuModule,
     MatTableModule, MatPaginatorModule,
     MatSortModule, MatSnackBarModule,
-    MatProgressBarModule, MatTooltipModule]
+    MatProgressBarModule, MatTooltipModule,
+    MatDialogModule]
 })
 export class MaterialModule { }

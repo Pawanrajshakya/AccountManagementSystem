@@ -6,6 +6,10 @@ import { IUser } from 'src/_models/user-data';
 import { UserService } from 'src/_services/user.service';
 import { IParam } from 'src/_models/param';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteUserComponent } from '../delete/delete.component';
+import { AlertService } from 'src/_services/alert.service';
+import { ViewUserComponent } from '../view/view.component';
 
 @Component({
   selector: 'app-list',
@@ -13,9 +17,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./list.component.css']
 })
 
-export class ListComponent implements AfterViewInit, OnInit {
+export class ListUserComponent implements AfterViewInit, OnInit {
 
-  columnsToDisplay = ['name', 'username', 'isActive', 'userRole', 'options'];
+  columnsToDisplay = ['name', 'username', 'userRole', 'edit', 'delete'];
 
   users: IUser[];
 
@@ -37,14 +41,19 @@ export class ListComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('selectedSearchBy', { static: false }) selectedSearchBy;
 
-  constructor(private userService: UserService, private route: Router) { }
+  constructor(
+    private matDialog: MatDialog,
+    private userService: UserService,
+    private alertService: AlertService,
+    private route: Router) { }
 
   private getUsers(param: IParam) {
     this.userService.get(this.params).subscribe((data) => {
       this.userDataSource.data = data.users;
       this.length = data.totalCount;
       this.isLoading = false;
-      console.log(data);
+    }, (error) => {
+      this.alertService.showAlert(error, 'Okay', 20000);
     });
   }
 
@@ -57,9 +66,9 @@ export class ListComponent implements AfterViewInit, OnInit {
       this.params.sortBy = sort.active;
       this.params.sortDirection = sort.direction;
       this.getUsers(this.params);
-      console.log(sort, 'sort');
     });
   }
+
   applyFilter(filteredValue: string) {
     this.isLoading = true;
 
@@ -71,16 +80,31 @@ export class ListComponent implements AfterViewInit, OnInit {
     this.params.pageNumber = 1;
     this.getUsers(this.params);
   }
+
   change(event: PageEvent) {
     this.isLoading = true;
     setTimeout(() => {
       this.params.pageNumber = event.pageIndex + 1;
       this.params.pageSize = event.pageSize;
       this.getUsers(this.params);
-      console.log(event);
     }, 500);
   }
+
   onAddNew() {
     this.route.navigate(['/addUser']);
+  }
+
+  onDelete(username: string, id: number) {
+    const dialogRef = this.matDialog.open(DeleteUserComponent, { data: { username, id } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.getUsers(this.params);
+      }
+    });
+  }
+
+  onView(id: number) {
+    const dialogRef = this.matDialog.open(ViewUserComponent, { data: { id } });
   }
 }

@@ -72,7 +72,7 @@ namespace API.Controllers
             // }
             // return InternalServerError(exception);
             
-            BadRequest(new ErrorMessageDto { Message = exception.Message });
+            BadRequest(exception.Message);
 
         protected static T GetSortBy<T>(string sortBy, T defaultSortBy)
         {

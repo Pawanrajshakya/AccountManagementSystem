@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using API.Dtos;
 using API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -99,6 +100,29 @@ namespace API.Controllers
                     return Ok();
 
                 return BadRequest();
+            }
+            catch (System.Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
+        [HttpPost("changepassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            try
+            {
+                var user = await this._serviceManager.User.Login(changePasswordDto.Username, changePasswordDto.OldPassword);
+
+                if (user == null)
+                    return BadRequest("Username or password does not matched.");
+
+                var result = await this._serviceManager.User.SetPassword(user.Id, changePasswordDto.NewPassword);
+
+                if (result)
+                    return Ok();
+
+                return BadRequest("Internal Error. Unable to change your password.");
             }
             catch (System.Exception e)
             {

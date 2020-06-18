@@ -3,22 +3,26 @@
        fxLayout="row"
        fxLayoutGap="10px">
     <div><i class="fa fa-bars"
-         (click)="sidenav.toggle()"></i></div>
+         (click)="hideTitle = !hideTitle"></i></div>
     <div> <a routerLink="/">AMS</a></div>
   </div>
   <div fxFlex
        fxLayout
        fxLayoutAlign="flex-end">
     <ul fxLayout
-        fxLayoutGap="10px"
+        fxLayoutGap="16px"
         class="navigation-items">
-        <li *ngIf="usernameToDisplay?.length > 0" >Welcome {{usernameToDisplay}}</li>
-
+      <li *ngIf="!!isLoggedIn">Welcome {{usernameToDisplay.toUpperCase()}}</li>
+      <li *ngIf="!!isLoggedIn"
+          (click)="onChangePassword()"
+          matTooltip="Change Password"><i class="fa fa-key"></i></li>
       <li><a routerLink="/login"
-           *ngIf="!isLoggedIn">Sign In <i class="fa fa-sign-in"></i></a></li>
+           *ngIf="!isLoggedIn"
+           matTooltip="Sign In">Sign In <i class="fa fa-sign-in"></i></a></li>
       <li><a routerLink="/login"
            (click)="onSignOut()"
-           *ngIf="!!isLoggedIn">Sign Out <i class="fa fa-sign-out"></i></a></li>
+           *ngIf="!!isLoggedIn"
+           matTooltip="Sign Out"><i class="fa fa-sign-out"></i></a></li>
     </ul>
   </div>
 </mat-toolbar>
@@ -35,7 +39,7 @@
           <div *ngIf="!menu.hasSubMenu">
             <a mat-list-item
                [routerLink]="menu.link"> <i [class]="menu.icon"></i><span
-                    class="mat-list-item-text">{{menu.title}}</span></a>
+                    class="mat-list-item-text" *ngIf="!hideTitle">{{menu.title}}</span></a>
           </div>
           <div *ngIf="menu.hasSubMenu">
             <a mat-list-item

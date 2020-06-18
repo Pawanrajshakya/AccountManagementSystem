@@ -3,7 +3,7 @@ export interface IUser {
   id: number;
   username: string;
   name: string;
-  password: string;
+  phone?: string;
   email: string;
   isActive: boolean;
   userRole: any[];
@@ -19,9 +19,15 @@ export interface IUsers {
 
 export interface IUserToSave {
   username: string;
-  password: string;
+  // password: string;
   name: string;
   email?: string;
   isActive: boolean;
   userRole: any[];
+}
+
+export interface IChangePassword {
+  username: string;
+  oldPassword: string;
+  newPassword: string;
 }

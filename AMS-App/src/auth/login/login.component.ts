@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      username: new FormControl('pawanshakya', [Validators.required]),
+      username: new FormControl('sysadmin', [Validators.required]),
       password: new FormControl('password', [Validators.required])
     });
   }
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         .subscribe(next => {
           this.alertService.showAlert('logged in successfully.', 'Close');
         }, error => {
-          this.alertService.showAlert('Login failed.');
+          this.alertService.showAlert(error);
         });
     }
   }

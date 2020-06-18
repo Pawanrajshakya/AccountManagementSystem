@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Observable, observable } from 'rxjs';
-import { IUsers, IUserToSave, IUser } from 'src/_models/user-data';
+import { IUsers, IUserToSave, IUser, IChangePassword } from 'src/_models/user-data';
 import { IParam } from 'src/_models/param';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class UserService {
         id: 0,
         name: '',
         username: '',
-        password: '',
+        // password: '',
         email: '',
         userRole: [],
         isActive: true
@@ -61,5 +61,18 @@ export class UserService {
   add(newUser: IUserToSave) {
     console.log(newUser);
     return this.http.post(this.baseUrl + 'user', newUser);
+  }
+
+  update(id: number, newUser: IUserToSave) {
+    return this.http.patch(this.baseUrl + 'user/' + id, newUser);
+  }
+
+  delete(id: number) {
+    return this.http.delete(this.baseUrl + 'user/' + id);
+  }
+
+  changePassword(changePassword: IChangePassword) {
+    console.log(changePassword);
+    return this.http.post(this.baseUrl + 'user/changepassword', changePassword);
   }
 }

@@ -1,4 +1,12 @@
-<p>
-  view works!
-  <input type="email" name="email" id="email">
-</p>
+<h1 mat-dialog-title>Detail of {{user?.name}}</h1>
+<div mat-dialog-content>
+  <div>
+    Name: {{user?.name}} <br>
+    Username: {{user?.username}}<br>
+    Phone: {{user?.phone}}<br>
+    Email: {{user?.email}}<br>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

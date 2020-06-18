@@ -19,6 +19,7 @@ namespace Service_Layer.Dtos
         [Required]
         public List<RoleDto> UserRole { get; set; }
         public bool IsActive { get; set; }
+        public bool IsVisible { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public int PasswordChangedCount { get; set; }
         public System.DateTime LastPasswordChangedOn { get; set; }

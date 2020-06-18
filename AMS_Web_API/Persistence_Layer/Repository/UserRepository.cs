@@ -15,11 +15,10 @@ namespace Persistence_Layer.Repository
         {
         }
 
-        public async Task<List<UserRole>> GetUserRoles(int id)
+        public async Task<User> GetUserRoles(int id)
         {
             List<Role> roles = new List<Role>();
-            var users = await _dbContext.Users.Include(x=>x.UserRole).SingleOrDefaultAsync(x=>x.Id == id && x.IsVisible == true);
-            return users.UserRole.ToList();
+            return await _dbContext.Users.Include(x=>x.UserRole).SingleOrDefaultAsync(x=>x.Id == id);
         }
 
         public async Task<bool> UserExists(string username)

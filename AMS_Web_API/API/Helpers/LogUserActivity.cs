@@ -19,9 +19,9 @@ namespace API.Helpers
             {
                 var service = context.HttpContext.RequestServices.GetService<IServiceManager>();
                 var userDto = await service.User.FindBy(userName);
-                if (userDto == null)
+                if (userDto == null || !userDto.IsActive || !userDto.IsVisible)
                 {
-                    context.Result = new BadRequestObjectResult("Invalid Request.");
+                    context.Result = new BadRequestObjectResult("Invalid User " + userName);
                     return;
                 }
                 CurrentUser.User = userDto;

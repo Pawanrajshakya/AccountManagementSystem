@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthData } from 'src/_models/auth-data';
@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { IUser } from 'src/_models/user-data';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,12 @@ export class AuthService {
 
   private baseUrl = environment.apiUrl;
 
-  private userData: IUser;
+  currentUser: IUser;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private userService: UserService) {
   }
 
   login(model: AuthData) {
@@ -35,6 +39,7 @@ export class AuthService {
         if (user) {
           localStorage.setItem('token', user.token);
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
+          this.getCurrentUser(this.decodedToken.nameid);
           this.authChange.next(true);
           this.router.navigate(['/home']);
           console.log(this.decodedToken);
@@ -45,7 +50,13 @@ export class AuthService {
 
   loggedIn() {
     const token = localStorage.getItem('token');
-    return !this.jwtHelper.isTokenExpired(token);
+    if (!this.jwtHelper.isTokenExpired(token)) {
+      this.decodedToken = this.jwtHelper.decodeToken(token);
+      this.getCurrentUser(this.decodedToken.nameid);
+      this.authChange.next(true);
+      return true;
+    }
+    return false;
   }
 
   logout() {
@@ -54,8 +65,19 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  isAuth() {
+  // isAuth() {
+  //   if (this.loggedIn()) {
+  //   this.decodedToken = this.jwtHelper.decodeToken(user.token);
 
+  //         this.getCurrentUser(this.decodedToken.nameid);
+  //       }
+  // }
+
+  getCurrentUser(id: number) {
+    this.userService.getById(id).subscribe((data) => {
+      this.currentUser = data;
+      console.log(this.currentUser);
+    });
   }
 
 }

@@ -15,7 +15,7 @@
       <mat-error *ngIf="!signUpForm.get('name').valid && signUpForm.get('name').touched">
         <mat-error *ngIf="signUpForm.get('name').errors['required']">Name is required.</mat-error>
         <mat-error *ngIf="signUpForm.get('name').errors['minlength']">Minium length is 6.</mat-error>
-        <mat-error *ngIf="signUpForm.get('name').errors['maxlength']">Minium length is 70.</mat-error>
+        <mat-error *ngIf="signUpForm.get('name').errors['maxlength']">Maximum length is 70.</mat-error>
       </mat-error>
     </mat-form-field>
 
@@ -29,11 +29,11 @@
       <mat-error *ngIf="!signUpForm.get('username').valid && signUpForm.get('username').touched">
         <mat-error *ngIf="signUpForm.get('username').errors['required']">Username is required.</mat-error>
         <mat-error *ngIf="signUpForm.get('username').errors['minlength']">Minium length is 6.</mat-error>
-        <mat-error *ngIf="signUpForm.get('username').errors['maxlength']">Minium length is 70.</mat-error>
+        <mat-error *ngIf="signUpForm.get('username').errors['maxlength']">Maximum length is 50.</mat-error>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field hintLabel="Maximum length is 50">
+    <!-- <mat-form-field hintLabel="Maximum length is 50">
       <input type="password"
              #password
              formControlName='password'
@@ -45,7 +45,7 @@
         <mat-error *ngIf="signUpForm.get('password').errors['minlength']">Minium length is 8.</mat-error>
         <mat-error *ngIf="signUpForm.get('password').errors['maxlength']">Minium length is 50.</mat-error>
       </mat-error>
-    </mat-form-field>
+    </mat-form-field> -->
 
     <mat-form-field hintLabel="Maximum length is 100">
       <input type="email"
@@ -57,7 +57,18 @@
       <mat-error *ngIf="!signUpForm.get('email').valid && signUpForm.get('email').touched">
         <mat-error *ngIf="signUpForm.get('email').errors['required']">Email is required.</mat-error>
         <mat-error *ngIf="signUpForm.get('email').errors['email']">Valid email address is required.</mat-error>
-        <mat-error *ngIf="signUpForm.get('email').errors['maxlength']">Minium length is 70.</mat-error>
+        <mat-error *ngIf="signUpForm.get('email').errors['maxlength']">Maximum length is 100.</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field hintLabel="Maximum length is 20">
+      <input type="text"
+             #phone
+             formControlName="phone"
+             placeholder="Phone"
+             matInput>
+      <mat-hint align="end">{{phone.value.length}}/20</mat-hint>
+      <mat-error *ngIf="!signUpForm.get('phone').valid && signUpForm.get('phone').touched">
+        <mat-error *ngIf="signUpForm.get('phone').errors['maxlength']">Maximum length is 20.</mat-error>
       </mat-error>
     </mat-form-field>
     <!-- <mat-form-field>
@@ -75,7 +86,7 @@
       <mat-label>Role</mat-label>
       <mat-select multiple
                   formControlName="selectedUserRole">
-        <mat-option *ngFor="let role of roles" 
+        <mat-option *ngFor="let role of roles"
                     [value]="role.id">
           {{role.description}}
         </mat-option>
@@ -93,9 +104,12 @@
     <div fxLayout="row"
          fxLayoutGap="10px">
       <button mat-raised-button
+              [disabled]="!signUpForm.valid"
               color="primary"
               type="submit">Save</button>
-      <button mat-raised-button type="button" (click)="onCancel()"
+      <button mat-raised-button
+              type="button"
+              (click)="onCancel()"
               class="accent">Cancel</button>
     </div>
   </form>

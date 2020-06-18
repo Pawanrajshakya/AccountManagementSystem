@@ -11,14 +11,14 @@ namespace Service_Layer.Helpers
 
         public int PageNumber { get => pageNumber; set => pageNumber = value; }
         public int PageSize { get => pageSize; set => pageSize = (value > maxPageSize) ? maxPageSize : value; }
-        public string SortBy { get; set; } = "";
-        public string SortDirection { get; set; } = "asc"; //asc/desc/""
+        public string SortBy { get; set; } = "createdDate";
+        public string SortDirection { get; set; } = "";//asc/desc/""
         public string SearchBy { get; set; } = "";
         public string SearchText { get; set; } = "";
 
         #endregion
 
-        public bool IsActive { get; set; } = true;
+        // public bool IsActive { get; set; } = true;
 
     }
 }
