@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { StoreModule } from '@ngrx/store';
+import * as fromLoginState from './store';
 
 @NgModule({
     declarations: [
@@ -16,7 +18,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         RouterModule,
         ReactiveFormsModule,
         MaterialModule,
-        FlexLayoutModule],
+        FlexLayoutModule,
+        StoreModule.forFeature(
+            fromLoginState.loginStateFeatureKey,
+            fromLoginState.reducers, {
+            metaReducers: fromLoginState.metaReducers
+        })],
     entryComponents: [
         ChangePasswordComponent],
     exports: [
