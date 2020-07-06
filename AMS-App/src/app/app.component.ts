@@ -3,7 +3,7 @@ import { MatAccordion } from '@angular/material/expansion/accordion';
 import { AuthService } from 'src/_services/auth.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { ChangePasswordComponent } from 'src/auth/changePassword/changePassword.component';
+import { ChangePasswordComponent } from 'src/auth/components/changePassword/changePassword.component';
 
 @Component({
   selector: 'app-root',

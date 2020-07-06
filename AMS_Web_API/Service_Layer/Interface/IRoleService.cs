@@ -8,7 +8,7 @@ namespace Service_Layer.Interface
     public interface IRoleService : IDeleteService, IAddService<RoleToSaveDto>,
     IUpdateService<RoleToEditDto>, IGetService<RoleDto>
     {
-        Task<RolesDto> GetAll(Param parameters);
         List<RoleDto> GetAll();
+        Task<RolesDto> GetAll(Param parameters);
     }
 }

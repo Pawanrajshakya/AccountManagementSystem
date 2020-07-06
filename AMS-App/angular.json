@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "AMS-App"
+  "defaultProject": "AMS-App",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
