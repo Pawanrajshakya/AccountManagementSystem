@@ -3,12 +3,12 @@ import { UserService } from 'src/_services/user.service';
 import { AuthService } from 'src/_services/auth.service';
 import { AlertService } from 'src/_services/alert.service';
 import { MatDialogRef , MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ListUserComponent } from '../list/list.component';
+import { ListUserComponent } from '../list/list-user.component';
 
 @Component({
-  selector: 'app-delete',
-  templateUrl: './delete.component.html',
-  styleUrls: ['./delete.component.css']
+  selector: 'app-delete-user',
+  templateUrl: './delete-user.component.html',
+  styleUrls: ['./delete-user.component.css']
 })
 export class DeleteUserComponent implements OnInit {
 

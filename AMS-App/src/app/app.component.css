@@ -53,3 +53,10 @@ a:active {
 .mat-list-item-text {
   margin-left: 10px;
 }
+
+.mat-expansion-panel { 
+  box-shadow: none;
+  border-radius: 0px;
+  left: -8px;
+  margin-right: -10px;
+}

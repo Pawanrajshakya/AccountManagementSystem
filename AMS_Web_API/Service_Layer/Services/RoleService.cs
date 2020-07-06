@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Persistence_Layer.Interfaces;
 using Persistence_Layer.Models;
 using Service_Layer.Dtos;
@@ -42,36 +41,93 @@ namespace Service_Layer.Services
             RoleDto roleDto = _mapper.Map<RoleDto>(entity);
             return roleDto;
         }
-        
-        public async Task<RolesDto> GetAll(Param parameters)
+
+        public async Task<RolesDto> GetAll(Param parameter)
         {
-             throw new NotImplementedException();
-            // PagedList<RoleDto> roleDtos = new PagedList<RoleDto>();
+            PagedList<RoleDto> roleDtos = new PagedList<RoleDto>();
 
-            // var queryable = _unitOfWork.Role.GetAll()
-            //     .Where(x => x.IsVisible && x.IsActive == parameters.IsActive);
+            var queryable = _unitOfWork.Role.GetAll()
+                .Where(x => x.IsVisible == true);
 
-            // if (!string.IsNullOrWhiteSpace(parameters.Description))
-            //     queryable = queryable.Where(x => x.Description.Contains(parameters.Description));
+            switch (parameter.SearchBy.ToLower())
+            {
+                case "description":
+                    queryable = queryable.Where(x => x.Description.Contains(parameter.SearchText));
+                    break;
+            }
 
-            // var roles = await PagedList<Role>.CreateAsync(queryable, parameters.PageNumber, parameters.PageSize);
+            switch (parameter.SortBy.ToLower())
+            {
+                case "description":
+                    switch (parameter.SortDirection.ToLower())
+                    {
+                        case "desc":
+                            queryable = queryable.OrderByDescending(x => x.Description);
+                            break;
+                        case "asc":
+                            queryable = queryable.OrderBy(x => x.Description);
+                            break;
+                        default:
+                            queryable = queryable.OrderByDescending(x => x.CreatedDate);
+                            break;
 
-            // if (roles != null)
-            // {
-            //     foreach (var role in roles)
-            //     {
-            //         RoleDto dto = _mapper.Map<RoleDto>(role);
-                    
-            //         roleDtos.Add(dto);
-            //     }
-            // }
-            // RolesDto rolesDto = new RolesDto();
-            // rolesDto.Roles = roleDtos;
-            // rolesDto.CurrentPage = roles.CurrentPage;
-            // rolesDto.PageSize = roles.PageSize;
-            // rolesDto.TotalCount = roles.TotalCount;
-            // rolesDto.TotalPages = roles.TotalPages;
-            // return rolesDto;
+                    }
+                    break;
+                case "createddate":
+                    switch (parameter.SortDirection.ToLower())
+                    {
+                        case "desc":
+                            queryable = queryable.OrderByDescending(x => x.CreatedDate);
+                            break;
+                        case "asc":
+                            queryable = queryable.OrderBy(x => x.CreatedDate);
+                            break;
+                        default:
+                            queryable = queryable.OrderByDescending(x => x.CreatedDate);
+                            break;
+                    }
+                    break;
+            }
+
+            var pagedRoles = await PagedList<Role>.CreateAsync(queryable, parameter.PageNumber, parameter.PageSize);
+
+            if (pagedRoles != null)
+            {
+                foreach (var role in pagedRoles)
+                {
+                    RoleDto dto = _mapper.Map<RoleDto>(role);
+                    roleDtos.Add(dto);
+                }
+            }
+
+            RolesDto roles = new RolesDto();
+            roles.Roles = roleDtos;
+            roles.CurrentPage = pagedRoles.CurrentPage;
+            roles.PageSize = pagedRoles.PageSize;
+            roles.TotalCount = pagedRoles.TotalCount;
+            roles.TotalPages = pagedRoles.TotalPages;
+            return roles;
+        }
+
+        public List<RoleDto> GetAll()
+        {
+            List<RoleDto> roleDtos = new List<RoleDto>();
+
+            var roles = _unitOfWork.Role.GetAll()
+                .Where(x => x.IsVisible == true)
+                .OrderBy(x => x.Description)
+                .ToList();
+            
+            if (roles != null)
+            {
+                foreach (var role in roles)
+                {
+                    RoleDto dto = _mapper.Map<RoleDto>(role);
+                    roleDtos.Add(dto);
+                }
+            }
+
+            return roleDtos; 
         }
 
         public async Task<bool> Remove(int id)

@@ -2,18 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { Observable, observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IUsers, IUserToSave, IUser, IChangePassword } from 'src/_models/user-data';
 import { IParam } from 'src/_models/param';
+import { Base } from './base';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService extends Base{
 
   private baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+    super();
+  }
 
   getById(id: number): Observable<IUser> {
     if (id === 0) {
@@ -21,7 +24,6 @@ export class UserService {
         id: 0,
         name: '',
         username: '',
-        // password: '',
         email: '',
         userRole: [],
         isActive: true
@@ -35,27 +37,8 @@ export class UserService {
   }
 
   get(parameters: IParam): Observable<IUsers> {
-    let httpParams = new HttpParams()
-      .set('pageNumber', parameters.pageNumber.toString())
-      .set('pageSize', parameters.pageSize.toString());
-
-    console.log(parameters.sortDirection);
-
-    if (parameters.searchBy) {
-      httpParams = httpParams.set('searchBy', parameters.searchBy || '');
-    }
-    if (parameters.searchText) {
-      httpParams = httpParams.set('searchText', parameters.searchText);
-    }
-    if (parameters.sortBy) {
-      httpParams = httpParams.set('sortBy', parameters.sortBy);
-    }
-    if (parameters.sortDirection) {
-      httpParams = httpParams.set('sortDirection', parameters.sortDirection);
-    }
-
+    const httpParams = this.getHttpParams(parameters);
     return this.http.get<IUsers>(this.baseUrl + 'user', { params: httpParams });
-
   }
 
   add(newUser: IUserToSave) {

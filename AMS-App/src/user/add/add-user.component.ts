@@ -4,23 +4,29 @@ import { UserService } from 'src/_services/user.service';
 import { IUser } from 'src/_models/user-data';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/_services/alert.service';
+import { RoleService } from 'src/_services/role.service';
+import { IParam } from 'src/_models/param';
+import { IRole } from 'src/_models/role-data';
 
 @Component({
-  selector: 'app-add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css']
+  selector: 'app-add-user',
+  templateUrl: './add-user.component.html',
+  styleUrls: ['./add-user.component.css']
 })
 
 export class AddUserComponent implements OnInit, AfterViewInit {
 
   signUpForm: FormGroup;
 
-  roles = [{ id: 1, description: 'Admin' }, { id: 2, description: 'User' }];
+  roles: IRole[];
   user: IUser;
   id = 0;
 
+  roleParam: IParam = {};
+
   constructor(
     private userService: UserService,
+    private roleService: RoleService,
     private router: Router,
     private route: ActivatedRoute,
     private alertService: AlertService) { }
@@ -30,6 +36,13 @@ export class AddUserComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+
+    this.roleService.get(this.roleParam).subscribe((data) => {
+      console.log(data);
+      this.roles = data.roles;
+    }, (error) => {
+      this.alertService.showAlert(error);
+    });
 
     this.signUpForm = new FormGroup({
       id: new FormControl(0),

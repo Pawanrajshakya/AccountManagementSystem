@@ -6,9 +6,9 @@ import { AlertService } from 'src/_services/alert.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css']
+  selector: 'app-view-user',
+  templateUrl: './view-user.component.html',
+  styleUrls: ['./view-user.component.css']
 })
 export class ViewUserComponent implements OnInit {
 

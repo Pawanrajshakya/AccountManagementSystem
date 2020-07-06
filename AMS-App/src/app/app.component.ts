@@ -52,17 +52,31 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
       title: 'Reports',
       link: 'listUser',
       isDisabled: false,
-      isExpanded: false,
-      hasSubMenu: false,
-      icon: 'fa fa-list'
+      isExpanded: true,
+      hasSubMenu: true,
+      icon: 'fa fa-list',
+      subMenus: [{
+        id: 'menu',
+        title: 'Menu Setup',
+        link: 'menu',
+        isDisabled: false,
+        icon: 'fa fa-linode'
+      }]
     }, {
       id: 'Codes',
       title: 'Code Setup',
-      link: 'listUser',
+      link: 'code',
       isDisabled: false,
-      isExpanded: false,
-      hasSubMenu: false,
-      icon: 'fa fa-linode'
+      isExpanded: true,
+      hasSubMenu: true,
+      icon: 'fa fa-linode',
+      subMenus: [{
+        id: 'menu',
+        title: 'Menu Setup',
+        link: 'menu',
+        isDisabled: false,
+        icon: 'fa fa-linode'
+      }]
     }, {
       id: 'Settings',
       title: 'Settings',

@@ -3,7 +3,7 @@
        fxLayout="row"
        fxLayoutGap="10px">
     <div><i class="fa fa-bars"
-         (click)="hideTitle = !hideTitle"></i></div>
+         (click)="sidenav.toggle()"></i></div>
     <div> <a routerLink="/">AMS</a></div>
   </div>
   <div fxFlex
@@ -27,6 +27,22 @@
   </div>
 </mat-toolbar>
 
+<!-- 
+<mat-accordion>
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Self aware panel
+      </mat-panel-title>
+      <mat-panel-description>
+        Currently I am {{panelOpenState ? 'open' : 'closed'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>I'm visible because I am open</p>
+  </mat-expansion-panel>
+</mat-accordion> -->
+
 <mat-drawer-container autosize>
   <mat-drawer #sidenav
               role="heading"
@@ -34,21 +50,26 @@
               opened>
     <mat-nav-list *ngIf="!!isLoggedIn">
       <mat-accordion displayMode="flat"
+                     multi="true"
                      #accordion="matAccordion">
         <div *ngFor="let menu of myMenu">
           <div *ngIf="!menu.hasSubMenu">
             <a mat-list-item
                [routerLink]="menu.link"> <i [class]="menu.icon"></i><span
-                    class="mat-list-item-text" *ngIf="!hideTitle">{{menu.title}}</span></a>
+                    class="mat-list-item-text">{{menu.title}}</span></a>
           </div>
-          <div *ngIf="menu.hasSubMenu">
-            <a mat-list-item
-               *ngFor="let sub of menu.subMenu"
-               [routerLink]="sub.link"
-               routerLinkActive="active"
-               [disabled]="sub.isDisabled"
-               [routerLinkActiveOptions]="{exact: true}">
-              <i [class]="sub.icon"></i>&nbsp;{{sub.title}}</a>
+          <div *ngIf="!!menu.hasSubMenu">
+            <mat-expansion-panel  [expanded]="menu.isExpanded">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <i [class]="menu.icon"></i><span class="mat-list-item-text">{{menu.title}}</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-list dense>
+                <mat-list-item *ngFor="let item of menu.subMenus">
+                  <i [class]="item.icon"></i><span class="mat-list-item-text">{{item.title}}</span> </mat-list-item>
+              </mat-list>
+            </mat-expansion-panel>
           </div>
         </div>
       </mat-accordion>

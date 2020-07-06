@@ -7,14 +7,14 @@ import { UserService } from 'src/_services/user.service';
 import { IParam } from 'src/_models/param';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteUserComponent } from '../delete/delete.component';
+import { DeleteUserComponent } from '../delete/delete-user.component';
 import { AlertService } from 'src/_services/alert.service';
-import { ViewUserComponent } from '../view/view.component';
+import { ViewUserComponent } from '../view/view-user.component';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: 'app-list-user',
+  templateUrl: './list-user.component.html',
+  styleUrls: ['./list-user.component.css']
 })
 
 export class ListUserComponent implements AfterViewInit, OnInit {

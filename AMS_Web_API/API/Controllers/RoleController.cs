@@ -41,6 +41,20 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet("all")]
+        public IActionResult Get()
+        {
+            try
+            {
+                var roles = _serviceManager.Role.GetAll();
+                return Ok(roles);
+            }
+            catch (System.Exception e)
+            {
+                return HandleException(e);
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {

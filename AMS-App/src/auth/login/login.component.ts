@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
 import { AuthService } from 'src/_services/auth.service';
-import { AlertService } from 'src/_services/alert.service';
+// import * as fromApp from '../../_shared/auth.reducer';
+
 
 @Component({
   selector: 'app-login',
@@ -13,9 +16,15 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private authService: AuthService, private alertService: AlertService) { }
+  isLoading$: Observable<boolean>;
+
+  constructor(
+    private authService: AuthService) { }
+    //private store: Store<{ auth: fromApp.IState }>) { }
 
   ngOnInit(): void {
+    // this.isLoading$ = this.store.select(state => state.auth.isLoading);
+
     this.loginForm = new FormGroup({
       username: new FormControl('sysadmin', [Validators.required]),
       password: new FormControl('password', [Validators.required])
@@ -28,11 +37,6 @@ export class LoginComponent implements OnInit {
         .login({
           username: this.loginForm.value.username,
           password: this.loginForm.value.password
-        })
-        .subscribe(next => {
-          this.alertService.showAlert('logged in successfully.', 'Close');
-        }, error => {
-          this.alertService.showAlert(error);
         });
     }
   }

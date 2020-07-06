@@ -11,15 +11,15 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppComponent } from 'src/app/app.component';
 import { HomeComponent } from 'src/home/home.component';
 import { HeaderComponent } from 'src/header/header.component';
-import { AddUserComponent } from 'src/user/add/add.component';
 import { LoginComponent } from 'src/auth/login/login.component';
 import { AuthService } from 'src/_services/auth.service';
-import { ListUserComponent } from 'src/user/list/list.component';
 import { AlertService } from 'src/_services/alert.service';
 import { ChangePasswordComponent } from 'src/auth/changePassword/changePassword.component';
-import { DeleteUserComponent } from 'src/user/delete/delete.component';
 import { ErrorInterceptorProvider } from 'src/_services/error.interceptor';
-import { ViewUserComponent } from 'src/user/view/view.component';
+import { AddUserComponent } from 'src/user/add/add-user.component';
+import { ListUserComponent } from 'src/user/list/list-user.component';
+import { DeleteUserComponent } from 'src/user/delete/delete-user.component';
+import { ViewUserComponent } from 'src/user/view/view-user.component';
 
 
 
