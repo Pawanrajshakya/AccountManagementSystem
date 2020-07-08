@@ -4,15 +4,16 @@ import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 
-import { AuthData } from 'src/_models/auth-data';
+import { IAuthData } from 'src/_models/auth-data';
 import { environment } from 'src/environments/environment';
 import { IUser } from 'src/_models/user-data';
-import { UserService } from './user.service';
+import { UserService } from '../../_services/user.service';
 
+import { AlertService } from '../../_services/alert.service';
+import { LoginState } from 'src/auth/store';
 
-import { AlertService } from './alert.service';
+import * as fromAction from '../store/auth.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class AuthService {
 
   decodedToken: any;
 
-  authChange = new Subject<boolean>();
+  // authChange = new Subject<boolean>();
 
   private baseUrl = environment.apiUrl;
 
@@ -34,12 +35,13 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private userService: UserService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private store: Store<LoginState>) {
   }
 
-  login(model: AuthData) {
+  login(model: IAuthData) {
 
-    //this.store.dispatch({ type: START_LOADING });
+    this.store.dispatch(fromAction.loadAuths());
 
     return this.http.post(this.baseUrl + 'auth/login', model).pipe(
       map((response: any) => {
@@ -49,17 +51,17 @@ export class AuthService {
           localStorage.setItem('token', user.token);
           this.decodedToken = this.jwtHelper.decodeToken(user.token);
           this.getCurrentUser(this.decodedToken.nameid);
-          this.authChange.next(true);
+          // this.authChange.next(true);
           this.router.navigate(['/home']);
           console.log(this.decodedToken);
         }
       })
     ).subscribe(next => {
       this.alertService.showAlert('logged in successfully.', 'Close');
-      //this.store.dispatch({ type: STOP_LOADING });
+      this.store.dispatch(fromAction.loadAuthsSuccess({ data: model }));
     }, error => {
       this.alertService.showAlert(error, 'Close', 6000, true);
-      //this.store.dispatch({ type: STOP_LOADING });
+      this.store.dispatch(fromAction.loadAuthsFailure({ error }));
     });
   }
 
@@ -68,15 +70,16 @@ export class AuthService {
     if (!this.jwtHelper.isTokenExpired(token)) {
       this.decodedToken = this.jwtHelper.decodeToken(token);
       this.getCurrentUser(this.decodedToken.nameid);
-      this.authChange.next(true);
+      // this.authChange.next(true);
       return true;
     }
     return false;
   }
 
   logout() {
+    this.store.dispatch(fromAction.loadAuthsFailure({ error: 'Logged Out.' }));
     localStorage.removeItem('token');
-    this.authChange.next(false);
+    // this.authChange.next(false);
     this.router.navigate(['/login']);
   }
 

@@ -13,12 +13,12 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AppComponent } from 'src/app/app.component';
 import { HomeComponent } from 'src/home/home.component';
 import { HeaderComponent } from 'src/header/header.component';
-import { AuthService } from 'src/_services/auth.service';
+import { AuthService } from 'src/auth/services/auth.service';
 import { AlertService } from 'src/_services/alert.service';
 import { ErrorInterceptorProvider } from 'src/_services/error.interceptor';
 import { reducers, metaReducers } from './reducers';
-// import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-// import { environment } from '../environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 import { UserModule } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
 
@@ -51,8 +51,8 @@ import { AuthModule } from 'src/auth/auth.module';
             strictStateImmutability: true,
             strictActionImmutability: true,
          },
-      })//,
-      //!environment.production ? StoreDevtoolsModule.instrument() : []
+      }),
+      StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
    ],
    providers: [
       AuthService, AlertService, ErrorInterceptorProvider

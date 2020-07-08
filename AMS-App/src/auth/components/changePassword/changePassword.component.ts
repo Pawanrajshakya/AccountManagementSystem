@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AuthService } from 'src/_services/auth.service';
+import { AuthService } from 'src/auth/services/auth.service';
 import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AppComponent } from 'src/app/app.component';
 import { MatDialogRef } from '@angular/material/dialog';

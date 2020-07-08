@@ -1,22 +1,23 @@
 import { Component, ViewChild, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion/accordion';
-import { AuthService } from 'src/_services/auth.service';
-import { Subscription } from 'rxjs';
+import { AuthService } from 'src/auth/services/auth.service';
+import { Subscription, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordComponent } from 'src/auth/components/changePassword/changePassword.component';
+import { LoginState, selectIsAuthenticated, selectAuthenticatedUser } from 'src/auth/store';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
+export class AppComponent implements AfterContentInit {
 
   isLoggedIn = false;
 
-  authSubscription: Subscription;
+  // authSubscription: Subscription;
 
-  usernameToDisplay: string;
 
   hideTitle = false;
 
@@ -96,33 +97,22 @@ export class AppComponent implements OnInit, OnDestroy, AfterContentInit {
     }
   ];
 
-  constructor(private authService: AuthService, private matDialog: MatDialog) { }
+  isLoading$: Observable<boolean>;
+  usernameToDisplay$: Observable<string>;
+
+
+  constructor(
+    private authService: AuthService,
+    private matDialog: MatDialog,
+    private store: Store<LoginState>) { }
 
   ngAfterContentInit(): void {
-    this.authService.loggedIn();
-  }
-
-  // closeAllPanels() {
-  //   this.Accordion.closeAll();
-  // }
-  // openAllPanels() {
-  //   this.Accordion.openAll();
-  // }
-
-  ngOnInit(): void {
-    this.authSubscription = this.authService.authChange.subscribe((loggedIn) => {
-      console.log(loggedIn);
-      this.isLoggedIn = loggedIn;
-      this.usernameToDisplay = this.authService.decodedToken.unique_name;
-    });
+    this.isLoading$ = this.store.pipe(select(selectIsAuthenticated));
+    this.usernameToDisplay$ = this.store.pipe(select(selectAuthenticatedUser));
   }
 
   onSignOut() {
     this.authService.logout();
-  }
-
-  ngOnDestroy(): void {
-    this.authSubscription.unsubscribe();
   }
 
   onChangePassword(): void {

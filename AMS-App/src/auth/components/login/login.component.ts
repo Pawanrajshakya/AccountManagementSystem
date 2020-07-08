@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-
-import { AuthService } from 'src/_services/auth.service';
-// import * as fromApp from '../../_shared/auth.reducer';
+import { AuthService } from 'src/auth/services/auth.service';
 
 
 @Component({
@@ -16,14 +12,10 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  isLoading$: Observable<boolean>;
-
   constructor(
     private authService: AuthService) { }
-    //private store: Store<{ auth: fromApp.IState }>) { }
 
   ngOnInit(): void {
-    // this.isLoading$ = this.store.select(state => state.auth.isLoading);
 
     this.loginForm = new FormGroup({
       username: new FormControl('sysadmin', [Validators.required]),
