@@ -5,6 +5,5 @@ namespace Persistence_Layer.Interfaces
 {
     public interface IAccountTypeRepository : IRepository<AccountType>
     {
-        Task<bool> AccountTypeExists(string description);
     }
 }

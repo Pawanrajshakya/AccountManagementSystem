@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Service_Layer.Helpers;
 
 namespace Service_Layer.Interface
 {
@@ -21,5 +23,11 @@ namespace Service_Layer.Interface
     public interface IGetService<T> where T : class
     {
         Task<T> Get(int id);
+        List<T> Get();
+    }
+
+    public interface IGetWithPaginationService<T> where T : class
+    {
+        Task<T> Get(Param parameters);
     }
 }

@@ -17,6 +17,7 @@ namespace Persistence_Layer.Interfaces
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
+        Task<bool> Exists(Expression<Func<TEntity, bool>> predicate);
         
     }
 }

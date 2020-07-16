@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion/accordion';
 import { AuthService } from 'src/auth/services/auth.service';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswordComponent } from 'src/auth/components/changePassword/changePassword.component';
 import { LoginState, selectIsAuthenticated, selectAuthenticatedUser } from 'src/auth/store';
@@ -14,18 +14,13 @@ import { Store, select } from '@ngrx/store';
 })
 export class AppComponent implements AfterContentInit {
 
-  isLoggedIn = false;
-
-  // authSubscription: Subscription;
-
-
-  hideTitle = false;
+  private hideTitle = false;
 
   @ViewChild('accordion', { static: true }) Accordion: MatAccordion;
 
   myMenu = [
     {
-      id: 'Home',
+      id: 1,
       title: 'Home',
       link: 'home',
       isDisabled: false,
@@ -33,7 +28,7 @@ export class AppComponent implements AfterContentInit {
       hasSubMenu: false,
       icon: 'fa fa-home'
     }, {
-      id: 'Account',
+      id: 2,
       title: 'Account',
       link: 'listUser',
       isDisabled: false,
@@ -41,7 +36,7 @@ export class AppComponent implements AfterContentInit {
       hasSubMenu: false,
       icon: 'fa fa-user-circle'
     }, {
-      id: 'Transaction',
+      id: 3,
       title: 'Transaction',
       link: 'listUser',
       isDisabled: false,
@@ -49,7 +44,7 @@ export class AppComponent implements AfterContentInit {
       hasSubMenu: false,
       icon: 'fa fa-money'
     }, {
-      id: 'Reports',
+      id: 4,
       title: 'Reports',
       link: 'listUser',
       isDisabled: false,
@@ -57,14 +52,14 @@ export class AppComponent implements AfterContentInit {
       hasSubMenu: true,
       icon: 'fa fa-list',
       subMenus: [{
-        id: 'menu',
+        id: 5,
         title: 'Menu Setup',
         link: 'menu',
         isDisabled: false,
         icon: 'fa fa-linode'
       }]
     }, {
-      id: 'Codes',
+      id: 6,
       title: 'Code Setup',
       link: 'code',
       isDisabled: false,
@@ -72,14 +67,21 @@ export class AppComponent implements AfterContentInit {
       hasSubMenu: true,
       icon: 'fa fa-linode',
       subMenus: [{
-        id: 'menu',
-        title: 'Menu Setup',
+        id: 7,
+        title: 'Role',
+        link: 'role',
+        isDisabled: false,
+        icon: 'fa fa-user'
+      },
+      {
+        id: 8,
+        title: 'Menu',
         link: 'menu',
         isDisabled: false,
         icon: 'fa fa-linode'
       }]
     }, {
-      id: 'Settings',
+      id: 9,
       title: 'Settings',
       link: 'listUser',
       isDisabled: false,
@@ -87,19 +89,18 @@ export class AppComponent implements AfterContentInit {
       hasSubMenu: false,
       icon: 'fa fa-cogs'
     }, {
-      id: 'User',
+      id: 10,
       title: 'User',
-      link: 'listUser',
+      link: 'user',
       isDisabled: false,
       isExpanded: false,
       hasSubMenu: false,
-      icon: 'fa fa-user'
+      icon: 'fa fa-users'
     }
   ];
 
   isLoading$: Observable<boolean>;
   usernameToDisplay$: Observable<string>;
-
 
   constructor(
     private authService: AuthService,

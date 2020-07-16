@@ -11,13 +11,5 @@ namespace Persistence_Layer.Repository
         public AccountRepository(DataContext dbContext) : base(dbContext)
         {
         }
-
-        public async Task<bool> AccountExists(string name)
-        {
-            if (await _dbContext.Account.AnyAsync(x => x.Name == name))
-                return true;
-
-            return false;
-        }
     }
 }

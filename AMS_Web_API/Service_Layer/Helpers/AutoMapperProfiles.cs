@@ -33,6 +33,12 @@ namespace Service_Layer.Helpers
             CreateMap<Service_Layer.Dtos.RoleToEditDto, Persistence_Layer.Models.Role>();
             CreateMap<Service_Layer.Dtos.RoleToSaveDto, Persistence_Layer.Models.Role>();
 
+            //Menu
+            CreateMap<Persistence_Layer.Models.Menu, Service_Layer.Dtos.Menu.MenuDto>().ForMember(x => x.Roles, opt => opt.Ignore());
+            CreateMap<Service_Layer.Dtos.Menu.MenuDto, Persistence_Layer.Models.Menu>();
+            CreateMap<Service_Layer.Dtos.Menu.MenuToEditDto, Persistence_Layer.Models.Menu>();//'.ForMember(x => x.UserRoles, opt => opt.Ignore());
+            CreateMap<Service_Layer.Dtos.Menu.MenuToSaveDto, Persistence_Layer.Models.Menu>();//.ForMember(x => x.UserRoles, opt => opt.Ignore());
+
             //Group
             CreateMap<Persistence_Layer.Models.Group, Service_Layer.Dtos.GroupDto>();
             CreateMap<Service_Layer.Dtos.GroupDto, Persistence_Layer.Models.Group>();

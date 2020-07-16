@@ -8,6 +8,7 @@ namespace Service_Layer.Interface
     {
         IBusinessService Business { get; }
         IRoleService Role { get; }
+        IMenuService Menu { get; }
         IAccountTypeService AccountType { get; }
         IAccountService Account { get; }
         IClientService Client { get; }

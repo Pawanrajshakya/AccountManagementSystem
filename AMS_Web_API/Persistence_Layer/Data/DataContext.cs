@@ -12,6 +12,7 @@ namespace Persistence_Layer.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Menu> Menus { get; set; }
         public DbSet<Business> Businesses { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }

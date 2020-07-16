@@ -1,0 +1,93 @@
+<mat-toolbar color="accent">
+  <mat-toolbar-row fxLayout="row"
+  fxLayoutAlign="space-around center"
+  fxLayoutGap="10px">
+    <div fxFlex="30">
+      <span>Menu Setup</span>
+    </div>
+    <div fxFlex="70" fxLayout="row"
+         fxLayoutAlign="end center"
+         fxLayoutGap="10px">
+      <span><button mat-flat-button
+                color="primary"
+                type="button"
+                (click)="onAddNew()"
+                matTooltip="Add menu">Add New</button></span>
+      <span><button mat-flat-button
+                color="primary"
+                type="button"
+                (click)="onAddNew()"
+                matTooltip="Export">Export</button></span>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<br>
+<div fxLayout="row"
+     fxLayoutAlign="space-evenly center">
+  <mat-form-field fxFlex="20%">
+    <mat-label>Search By</mat-label>
+    <mat-select #selectedSearchBy
+                [(value)]="selected">
+      <mat-option *ngFor="let item of searchList"
+                  [value]="item.value">
+        {{item.value}} </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field fxFlex="40%">
+    <mat-label>Filter</mat-label>
+    <input matInput
+           (keyup)="applyFilter($event.target.value)"
+           placeholder="">
+  </mat-form-field>
+
+</div>
+<table mat-table
+       [dataSource]="dataSource"
+       matSort>
+  <tr mat-header-row
+      *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+  <tr mat-row
+      *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+  <ng-container matColumnDef="title">
+    <th mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        [disabled]="isLoading"> Title </th>
+    <td mat-cell
+        *matCellDef="let menu"> <button mat-button
+              (click)="onView(menu.id)"
+              color="primary">{{menu.title}}</button> </td>
+  </ng-container>
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell
+        *matHeaderCellDef>Edit</th>
+    <td mat-cell
+        *matCellDef="let menu">
+      <button mat-icon-button
+              matTooltip="Edit or Change"
+              matTooltipClass="example-tooltip-red"
+              color="primary"
+              [routerLink]="['/addMenu',menu.id]"><i class="fa fa-edit"></i></button>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell
+        *matHeaderCellDef>Delete</th>
+    <td mat-cell
+        *matCellDef="let menu">
+      <button mat-icon-button
+              matTooltip="Delete or Remove"
+              matTooltipClass="example-tooltip-red"
+              color="primary"
+              (click)="onDelete(menu.title, menu.id)"><i class="fa fa-trash"></i></button>
+    </td>
+  </ng-container>
+</table>
+<mat-progress-bar mode="indeterminate"
+                  *ngIf="!!isLoading"></mat-progress-bar>
+<mat-paginator [length]="length"
+               [pageSize]="params.pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="change($event)"
+               [disabled]="isLoading">
+</mat-paginator>

@@ -20,7 +20,7 @@ namespace Service_Layer.Services
         public async Task<int> Add(BusinessToSaveDto entity)
         {
 
-            if (await _unitOfWork.Business.BusinessExists(entity.Name))
+            if (await _unitOfWork.Business.Exists(x=>x.Name == entity.Name))
             {
                 throw new Exception("Already exists.");
             }

@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { IUser } from 'src/_models/user-data';
-import { UserService } from 'src/_services/user.service';
+import { UserService } from 'src/user/services/user.service';
 import { IParam } from 'src/_models/param';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';

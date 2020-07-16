@@ -25,7 +25,7 @@ namespace API.Controllers
         {
             try
             {
-                var users = await _serviceManager.User.GetAll(parameter);
+                var users = await _serviceManager.User.Get(parameter);
                 if (users != null)
                 {
                     Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);

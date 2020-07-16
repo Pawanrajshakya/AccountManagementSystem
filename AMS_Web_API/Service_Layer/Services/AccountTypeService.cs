@@ -19,7 +19,7 @@ namespace Service_Layer.Services
 
         public async Task<int> Add(AccountTypeToSaveDto Entity)
         {
-            if (await _unitOfWork.AccountType.AccountTypeExists(Entity.Description))
+            if (await _unitOfWork.AccountType.Exists(x=>x.Description == Entity.Description))
             {
                 throw new Exception("Name already exists.");
             }
@@ -104,7 +104,7 @@ namespace Service_Layer.Services
 
             entityToUpdate.Description = entity.Description;
             entityToUpdate.IsActive = entity.IsActive;
-            entityToUpdate.Order = entity.Order;
+            entityToUpdate.SortId = entity.SortId;
             entityToUpdate.GroupId = entity.GroupId;
 
             _unitOfWork.AccountType.Update(entityToUpdate);

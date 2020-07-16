@@ -14,7 +14,7 @@ namespace Persistence_Layer.Models
 
         //public List<AccountType> AccountTypes { get; set; }
 
-        public int Order { get; set; }
+        public int SortId { get; set; }
 
     }
 }

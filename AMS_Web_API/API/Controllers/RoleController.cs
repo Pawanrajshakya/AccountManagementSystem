@@ -25,7 +25,7 @@ namespace API.Controllers
         {
             try
             {
-                var roles = await _serviceManager.Role.GetAll(paramerters);
+                var roles = await _serviceManager.Role.Get(paramerters);
 
                 if (roles != null)
                 {
@@ -46,7 +46,7 @@ namespace API.Controllers
         {
             try
             {
-                var roles = _serviceManager.Role.GetAll();
+                var roles = _serviceManager.Role.Get();
                 return Ok(roles);
             }
             catch (System.Exception e)

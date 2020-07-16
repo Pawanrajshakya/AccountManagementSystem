@@ -20,7 +20,7 @@ namespace Service_Layer.Services
 
         public async Task<int> Add(GroupToSaveDto entity)
         {
-            if (await _unitOfWork.Group.GroupExists(entity.Description))
+            if (await _unitOfWork.Group.Exists(x => x.Description == entity.Description))
             {
                 throw new Exception("Already exists.");
             }
@@ -105,7 +105,7 @@ namespace Service_Layer.Services
 
             group.Description = entity.Description;
             group.IsActive = entity.IsActive;
-            group.Order = entity.Order;
+            group.SortId = entity.SortId;
 
             _unitOfWork.Group.Update(group);
 

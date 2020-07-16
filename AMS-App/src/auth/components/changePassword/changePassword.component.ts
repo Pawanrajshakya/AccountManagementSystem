@@ -3,7 +3,7 @@ import { AuthService } from 'src/auth/services/auth.service';
 import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AppComponent } from 'src/app/app.component';
 import { MatDialogRef } from '@angular/material/dialog';
-import { UserService } from 'src/_services/user.service';
+import { UserService } from 'src/user/services/user.service';
 import { AlertService } from 'src/_services/alert.service';
 
 

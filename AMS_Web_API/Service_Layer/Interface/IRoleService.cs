@@ -6,9 +6,8 @@ using Service_Layer.Helpers;
 namespace Service_Layer.Interface
 {
     public interface IRoleService : IDeleteService, IAddService<RoleToSaveDto>,
-    IUpdateService<RoleToEditDto>, IGetService<RoleDto>
+    IUpdateService<RoleToEditDto>, IGetService<RoleDto>, IGetWithPaginationService<RolesDto>
     {
-        List<RoleDto> GetAll();
-        Task<RolesDto> GetAll(Param parameters);
+        
     }
 }

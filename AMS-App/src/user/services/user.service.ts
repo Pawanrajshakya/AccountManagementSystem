@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { IUsers, IUserToSave, IUser, IChangePassword } from 'src/_models/user-data';
 import { IParam } from 'src/_models/param';
-import { Base } from './base';
+import { Base } from '../../_services/base';
 
 @Injectable({
   providedIn: 'root'

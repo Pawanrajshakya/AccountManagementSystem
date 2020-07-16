@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { IAuthData } from 'src/_models/auth-data';
 import { environment } from 'src/environments/environment';
 import { IUser } from 'src/_models/user-data';
-import { UserService } from '../../_services/user.service';
+import { UserService } from '../../user/services/user.service';
 
 import { AlertService } from '../../_services/alert.service';
 import { LoginState } from 'src/auth/store';
@@ -25,8 +25,6 @@ export class AuthService {
 
   decodedToken: any;
 
-  // authChange = new Subject<boolean>();
-
   private baseUrl = environment.apiUrl;
 
   currentUser: IUser;
@@ -37,6 +35,7 @@ export class AuthService {
     private userService: UserService,
     private alertService: AlertService,
     private store: Store<LoginState>) {
+    this.loggedIn();
   }
 
   login(model: IAuthData) {
@@ -70,30 +69,22 @@ export class AuthService {
     if (!this.jwtHelper.isTokenExpired(token)) {
       this.decodedToken = this.jwtHelper.decodeToken(token);
       this.getCurrentUser(this.decodedToken.nameid);
-      // this.authChange.next(true);
       return true;
     }
+    this.store.dispatch(fromAction.loadAuthsFailure({ error: 'Token Expired.' }));
     return false;
   }
 
   logout() {
     this.store.dispatch(fromAction.loadAuthsFailure({ error: 'Logged Out.' }));
     localStorage.removeItem('token');
-    // this.authChange.next(false);
     this.router.navigate(['/login']);
   }
-
-  // isAuth() {
-  //   if (this.loggedIn()) {
-  //   this.decodedToken = this.jwtHelper.decodeToken(user.token);
-
-  //         this.getCurrentUser(this.decodedToken.nameid);
-  //       }
-  // }
 
   getCurrentUser(id: number) {
     this.userService.getById(id).subscribe((data) => {
       this.currentUser = data;
+      this.store.dispatch(fromAction.loadAuthsSuccess({ data: { username: this.currentUser.username, password: '' } }));
       console.log(this.currentUser);
     });
   }

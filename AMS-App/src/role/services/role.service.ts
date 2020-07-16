@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IRole, IRoles, IRoleToSave } from 'src/_models/role-data';
 import { IParam } from 'src/_models/param';
-import { Base } from './base';
+import { Base } from 'src/_services/base';
 
 @Injectable({
   providedIn: 'root'

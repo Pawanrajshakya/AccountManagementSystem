@@ -12,12 +12,5 @@ namespace Persistence_Layer.Repository
         {
         }
 
-        public async Task<bool> RoleExists(string description)
-        {
-            if (await _dbContext.Roles.AnyAsync(x => x.Description == description))
-                return true;
-
-            return false;
-        }
     }
 }

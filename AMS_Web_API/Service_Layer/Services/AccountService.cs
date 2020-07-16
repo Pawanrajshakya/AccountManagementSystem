@@ -20,7 +20,7 @@ namespace Service_Layer.Services
         public async Task<int> Add(AccountToSaveDto entity)
         {
 
-            if (await _unitOfWork.Account.AccountExists(entity.AccountNo))
+            if (await _unitOfWork.Account.Exists(x=>x.AccountNo == entity.AccountNo))
             {
                 throw new Exception("Already exists.");
             }
@@ -120,7 +120,7 @@ namespace Service_Layer.Services
             account.MiddleName = entity.MiddleName;
             account.RelationshipId = entity.RelationshipId;
             account.Phone = entity.Phone;
-            account.Order = entity.Order;
+            account.SortId = entity.SortId;
             account.IsActive = entity.IsActive;
 
             _unitOfWork.Account.Update(account);

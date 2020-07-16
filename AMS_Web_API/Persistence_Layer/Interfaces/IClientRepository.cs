@@ -5,7 +5,5 @@ namespace Persistence_Layer.Interfaces
 {
     public interface IClientRepository: IRepository<Client>
     {
-         Task<bool> ClientExists(string name);
-         
     }
 }

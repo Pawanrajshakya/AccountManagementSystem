@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence_Layer.Migrations
 {
-    public partial class Date_06092020 : Migration
+    public partial class InitalCreateDB_07_15 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace Persistence_Layer.Migrations
                     State = table.Column<string>(maxLength: 2, nullable: true),
                     ZipCode = table.Column<string>(maxLength: 20, nullable: true),
                     RelationshipId = table.Column<int>(nullable: false),
-                    Order = table.Column<int>(nullable: false),
+                    SortId = table.Column<int>(nullable: false),
                     CreatedBy = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<int>(nullable: false),
@@ -82,11 +82,36 @@ namespace Persistence_Layer.Migrations
                     IsActive = table.Column<bool>(nullable: false),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     Description = table.Column<string>(nullable: false),
-                    Order = table.Column<int>(nullable: false)
+                    SortId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Groups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Menus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedBy = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    LastModifiedBy = table.Column<int>(nullable: false),
+                    LastModifiedDate = table.Column<DateTime>(nullable: false),
+                    IsVisible = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    Title = table.Column<string>(nullable: false),
+                    Link = table.Column<string>(nullable: true),
+                    IconName = table.Column<string>(nullable: true),
+                    MainMenuId = table.Column<int>(nullable: false),
+                    SortId = table.Column<int>(nullable: false),
+                    UserRoles = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Menus", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -242,7 +267,7 @@ namespace Persistence_Layer.Migrations
                     IsActive = table.Column<bool>(nullable: false),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    Order = table.Column<int>(nullable: false),
+                    SortId = table.Column<int>(nullable: false),
                     GroupId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -309,7 +334,7 @@ namespace Persistence_Layer.Migrations
                     State = table.Column<string>(maxLength: 2, nullable: true),
                     ZipCode = table.Column<string>(maxLength: 20, nullable: true),
                     RelationshipId = table.Column<int>(nullable: false),
-                    Order = table.Column<int>(nullable: false)
+                    SortId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -401,21 +426,21 @@ namespace Persistence_Layer.Migrations
             migrationBuilder.InsertData(
                 table: "Businesses",
                 columns: new[] { "Id", "Address1", "Address2", "CreatedBy", "CreatedDate", "Description", "IsActive", "IsVisible", "LastModifiedBy", "LastModifiedDate", "Name", "State", "ZipCode" },
-                values: new object[] { 1, "Address 1", "Address 2", 0, new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(4200), null, true, true, 0, new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(4220), "Business Name", "zz", "zzzzz" });
+                values: new object[] { 1, "Address 1", "Address 2", 0, new DateTime(2020, 7, 15, 9, 26, 56, 799, DateTimeKind.Local).AddTicks(9880), null, true, true, 0, new DateTime(2020, 7, 15, 9, 26, 56, 799, DateTimeKind.Local).AddTicks(9900), "Business Name", "zz", "zzzzz" });
 
             migrationBuilder.InsertData(
                 table: "Groups",
-                columns: new[] { "Id", "CreatedBy", "CreatedDate", "Description", "IsActive", "IsVisible", "LastModifiedBy", "LastModifiedDate", "Order" },
-                values: new object[] { 1, 0, new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(7760), "New Group", true, true, 0, new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(7770), 0 });
+                columns: new[] { "Id", "CreatedBy", "CreatedDate", "Description", "IsActive", "IsVisible", "LastModifiedBy", "LastModifiedDate", "SortId" },
+                values: new object[] { 1, 0, new DateTime(2020, 7, 15, 9, 26, 56, 800, DateTimeKind.Local).AddTicks(4530), "New Group", true, true, 0, new DateTime(2020, 7, 15, 9, 26, 56, 800, DateTimeKind.Local).AddTicks(4560), 0 });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedBy", "CreatedDate", "Description", "IsActive", "IsVisible", "LastModifiedBy", "LastModifiedDate" },
                 values: new object[,]
                 {
-                    { 1, 0, new DateTime(2020, 6, 9, 15, 14, 44, 889, DateTimeKind.Local).AddTicks(3110), "Admin", true, true, 0, new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(5800) },
-                    { 2, 0, new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9510), "User", true, true, 0, new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9540) },
-                    { 3, 0, new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9610), "Viewer", true, true, 0, new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9620) }
+                    { 1, 0, new DateTime(2020, 7, 15, 9, 26, 56, 784, DateTimeKind.Local).AddTicks(8760), "Admin", true, true, 0, new DateTime(2020, 7, 15, 9, 26, 56, 797, DateTimeKind.Local).AddTicks(9890) },
+                    { 2, 0, new DateTime(2020, 7, 15, 9, 26, 56, 798, DateTimeKind.Local).AddTicks(3270), "User", true, true, 0, new DateTime(2020, 7, 15, 9, 26, 56, 798, DateTimeKind.Local).AddTicks(3310) },
+                    { 3, 0, new DateTime(2020, 7, 15, 9, 26, 56, 798, DateTimeKind.Local).AddTicks(3370), "Viewer", true, true, 0, new DateTime(2020, 7, 15, 9, 26, 56, 798, DateTimeKind.Local).AddTicks(3370) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -468,6 +493,9 @@ namespace Persistence_Layer.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AccountHistories");
+
+            migrationBuilder.DropTable(
+                name: "Menus");
 
             migrationBuilder.DropTable(
                 name: "Transactions");

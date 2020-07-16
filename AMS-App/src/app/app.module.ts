@@ -21,6 +21,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { UserModule } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { RoleModule } from 'src/role/role.module';
+import { MenuModule } from 'src/menu/menu.module';
 
 @NgModule({
    declarations: [
@@ -38,6 +40,8 @@ import { AuthModule } from 'src/auth/auth.module';
       HttpClientModule,
       AuthModule,
       UserModule,
+      RoleModule,
+      MenuModule,
       JwtModule.forRoot({
          config: {
             tokenGetter: getToken,

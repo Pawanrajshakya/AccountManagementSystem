@@ -1,12 +1,12 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserService } from 'src/_services/user.service';
+import { UserService } from 'src/user/services/user.service';
 import { IUser } from 'src/_models/user-data';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/_services/alert.service';
-import { RoleService } from 'src/_services/role.service';
 import { IParam } from 'src/_models/param';
 import { IRole } from 'src/_models/role-data';
+import { RoleService } from 'src/role/services/role.service';
 
 @Component({
   selector: 'app-add-user',
@@ -101,13 +101,13 @@ export class AddUserComponent implements OnInit, AfterViewInit {
     console.log('???', this.user);
     if (this.id === 0) {
       this.userService.add(this.user).subscribe((response) => {
-        this.router.navigate(['/listUser']);
+        this.router.navigate(['/user']);
       }, (error) => {
         this.alertService.showAlert(error);
       });
     } else {
       this.userService.update(this.id, this.user).subscribe((response) => {
-        this.router.navigate(['/listUser']);
+        this.router.navigate(['/user']);
       }, (error) => {
         this.alertService.showAlert(error);
       });
@@ -115,6 +115,6 @@ export class AddUserComponent implements OnInit, AfterViewInit {
   }
 
   onCancel() {
-    this.router.navigate(['/listUser']);
+    this.router.navigate(['/user']);
   }
 }

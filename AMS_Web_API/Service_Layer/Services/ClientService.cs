@@ -19,7 +19,7 @@ namespace Service_Layer.Services
 
         public async Task<int> Add(ClientToSaveDto entity)
         {
-            if (await _unitOfWork.Client.ClientExists(entity.Name))
+            if (await _unitOfWork.Client.Exists(x=>x.Name == entity.Name))
             {
                 throw new Exception("Already exists.");
             }

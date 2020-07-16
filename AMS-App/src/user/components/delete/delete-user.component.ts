@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { UserService } from 'src/_services/user.service';
+import { UserService } from 'src/user/services/user.service';
 import { AuthService } from 'src/auth/services/auth.service';
 import { AlertService } from 'src/_services/alert.service';
 import { MatDialogRef , MAT_DIALOG_DATA} from '@angular/material/dialog';

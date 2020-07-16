@@ -86,9 +86,6 @@ namespace Persistence_Layer.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(12)")
                         .HasMaxLength(12);
@@ -100,6 +97,9 @@ namespace Persistence_Layer.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
+
+                    b.Property<int>("SortId")
+                        .HasColumnType("int");
 
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(2)")
@@ -187,9 +187,6 @@ namespace Persistence_Layer.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(12)")
                         .HasMaxLength(12);
@@ -199,6 +196,9 @@ namespace Persistence_Layer.Migrations
 
                     b.Property<byte[]>("RowVersion")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("SortId")
+                        .HasColumnType("int");
 
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(2)")
@@ -244,13 +244,13 @@ namespace Persistence_Layer.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
+
+                    b.Property<int>("SortId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -324,11 +324,11 @@ namespace Persistence_Layer.Migrations
                             Address1 = "Address 1",
                             Address2 = "Address 2",
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(4200),
+                            CreatedDate = new DateTime(2020, 7, 15, 9, 26, 56, 799, DateTimeKind.Local).AddTicks(9880),
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(4220),
+                            LastModifiedDate = new DateTime(2020, 7, 15, 9, 26, 56, 799, DateTimeKind.Local).AddTicks(9900),
                             Name = "Business Name",
                             State = "zz",
                             ZipCode = "zzzzz"
@@ -407,13 +407,13 @@ namespace Persistence_Layer.Migrations
                     b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("int");
-
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
+
+                    b.Property<int>("SortId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -424,14 +424,68 @@ namespace Persistence_Layer.Migrations
                         {
                             Id = 1,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(7760),
+                            CreatedDate = new DateTime(2020, 7, 15, 9, 26, 56, 800, DateTimeKind.Local).AddTicks(4530),
                             Description = "New Group",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 6, 9, 15, 14, 44, 904, DateTimeKind.Local).AddTicks(7770),
-                            Order = 0
+                            LastModifiedDate = new DateTime(2020, 7, 15, 9, 26, 56, 800, DateTimeKind.Local).AddTicks(4560),
+                            SortId = 0
                         });
+                });
+
+            modelBuilder.Entity("Persistence_Layer.Models.Menu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IconName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MainMenuId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("SortId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserRoles")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Menus");
                 });
 
             modelBuilder.Entity("Persistence_Layer.Models.Relationship", b =>
@@ -516,34 +570,34 @@ namespace Persistence_Layer.Migrations
                         {
                             Id = 1,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 6, 9, 15, 14, 44, 889, DateTimeKind.Local).AddTicks(3110),
+                            CreatedDate = new DateTime(2020, 7, 15, 9, 26, 56, 784, DateTimeKind.Local).AddTicks(8760),
                             Description = "Admin",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(5800)
+                            LastModifiedDate = new DateTime(2020, 7, 15, 9, 26, 56, 797, DateTimeKind.Local).AddTicks(9890)
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9510),
+                            CreatedDate = new DateTime(2020, 7, 15, 9, 26, 56, 798, DateTimeKind.Local).AddTicks(3270),
                             Description = "User",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9540)
+                            LastModifiedDate = new DateTime(2020, 7, 15, 9, 26, 56, 798, DateTimeKind.Local).AddTicks(3310)
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = 0,
-                            CreatedDate = new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9610),
+                            CreatedDate = new DateTime(2020, 7, 15, 9, 26, 56, 798, DateTimeKind.Local).AddTicks(3370),
                             Description = "Viewer",
                             IsActive = true,
                             IsVisible = true,
                             LastModifiedBy = 0,
-                            LastModifiedDate = new DateTime(2020, 6, 9, 15, 14, 44, 902, DateTimeKind.Local).AddTicks(9620)
+                            LastModifiedDate = new DateTime(2020, 7, 15, 9, 26, 56, 798, DateTimeKind.Local).AddTicks(3370)
                         });
                 });
 

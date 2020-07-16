@@ -53,6 +53,7 @@ namespace API
             services.AddScoped<IServiceManager, ServiceManager>();
             services.AddScoped<IBusinessService, BusinessService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IGroupService, GroupService>();
             services.AddScoped<IAccountTypeService, AccountTypeService>();

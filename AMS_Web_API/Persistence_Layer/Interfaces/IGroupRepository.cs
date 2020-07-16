@@ -5,6 +5,5 @@ namespace Persistence_Layer.Interfaces
 {
     public interface IGroupRepository: IRepository<Group>
     {
-         Task<bool> GroupExists(string description);
     }
 }
