@@ -17,6 +17,7 @@ namespace Persistence_Layer.Interfaces
         IUserRepository User { get; }
         IUserHistoryRepository UserHistory { get; }
         IUserActivityRepository UserActivity { get; }
+        IMenuRepository Menu { get; }
         int Complete();
     }
 }

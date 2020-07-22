@@ -5,6 +5,5 @@ namespace Persistence_Layer.Interfaces
 {
     public interface IRelationshipRepository: IRepository<Relationship>
     {
-         Task<bool> RelationshipExists(string description);
     }
 }

@@ -24,6 +24,7 @@ namespace Persistence_Layer.Data
             User = new UserRepository(_context);
             UserHistory = new UserHistoryRepository(_context);
             UserActivity = new UserActivityRepository(_context);
+            Menu = new MenuRepository(_context);
         }
 
         public IAccountRepository Account { get; private set; }
@@ -51,6 +52,7 @@ namespace Persistence_Layer.Data
         public IUserHistoryRepository UserHistory { get; private set; }
 
         public IUserActivityRepository UserActivity { get; private set; }
+        public IMenuRepository Menu { get; private set; }
 
         public int Complete()
         {

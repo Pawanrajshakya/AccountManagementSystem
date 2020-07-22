@@ -1,4 +1,3 @@
-using Service_Layer.Helpers;
 using Service_Layer.Interface;
 
 namespace Service_Layer.Services
@@ -14,7 +13,8 @@ namespace Service_Layer.Services
             IAccountService account,
             IClientService client,
             IRelationshipService relationship,
-            IUserActivityService userActivity)
+            IUserActivityService userActivity,
+            IMenuService menuService)
         {
             this.Business = business;
             this.Role = role;
@@ -25,10 +25,12 @@ namespace Service_Layer.Services
             this.Client = client;
             this.Relationship = relationship;
             this.UserActivity = userActivity;
+            this.Menu = menuService;
         }
 
         public IBusinessService Business { get; private set; }
         public IRoleService Role { get; private set; }
+        public IMenuService Menu { get; private set; }
         public IAccountTypeService AccountType { get; private set; }
         public IAccountService Account { get; private set; }
         public IClientService Client { get; private set; }

@@ -12,12 +12,6 @@ namespace Persistence_Layer.Repository
         {
         }
 
-        public async Task<bool> GroupExists(string description)
-        {
-            if (await _dbContext.Groups.AnyAsync(x => x.Description == description))
-                return true;
-
-            return false;
-        }
+        
     }
 }

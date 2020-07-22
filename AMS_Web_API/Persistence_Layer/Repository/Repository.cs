@@ -69,5 +69,13 @@ namespace Persistence_Layer.Repository
         {
             return await _dbContext.Set<TEntity>().FirstOrDefaultAsync(predicate);
         }
+        
+        public async Task<bool> Exists(Expression<Func<TEntity, bool>> predicate)
+        {
+            if (await _dbContext.Set<TEntity>().AnyAsync(predicate))
+                return true;
+
+            return false;
+        }
     }
 }

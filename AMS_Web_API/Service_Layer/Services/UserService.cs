@@ -24,7 +24,7 @@ namespace Service_Layer.Services
         {
             byte[] passwordHash, passwordSalt;
 
-            if (await _unitOfWork.User.UserExists(entity.Username))
+            if (await _unitOfWork.User.Exists(x=>x.UserName == entity.Username))
                 throw new Exception("Username already exists.");
 
             User userToCreate = _mapper.Map<User>(entity);
@@ -66,7 +66,7 @@ namespace Service_Layer.Services
             return userDto;
         }
 
-        public async Task<UsersDto> GetAll(Param parameter)
+        public async Task<UsersDto> Get(Param parameter)
         {
             PagedList<UserDto> userDtos = new PagedList<UserDto>();
 
@@ -318,6 +318,11 @@ namespace Service_Layer.Services
                 return true;
 
             return false;
+        }
+
+        public List<UserDto> Get()
+        {
+            throw new NotImplementedException();
         }
     }
 }

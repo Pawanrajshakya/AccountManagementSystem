@@ -50,7 +50,7 @@ namespace Persistence_Layer.Models
         public int RelationshipId { get; set; } //Relationship with main account
         #endregion
         
-        public int Order { get; set; }
+        public int SortId { get; set; }
 
         public int CreatedBy { get; set; }
 

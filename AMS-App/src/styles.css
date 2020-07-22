@@ -9,3 +9,11 @@ input.ng-invalid.ng-touched {
 
 html, body { height: 100%; margin: 0px;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.error-snackbar {
+  color: red;
+}
+
+.message-snackbar {
+  color: white;
+}

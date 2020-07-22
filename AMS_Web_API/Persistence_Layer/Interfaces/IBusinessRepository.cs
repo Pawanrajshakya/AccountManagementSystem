@@ -5,6 +5,5 @@ namespace Persistence_Layer.Interfaces
 {
     public interface IBusinessRepository: IRepository<Business>
     {
-         Task<bool> BusinessExists(string name);
     }
 }

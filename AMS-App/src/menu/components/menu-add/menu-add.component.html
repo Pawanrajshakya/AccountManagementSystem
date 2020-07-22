@@ -1,0 +1,93 @@
+<section>
+  <form [formGroup]="menuForm"
+        (ngSubmit)="onSubmit()"
+        fxLayout="column"
+        fxLayoutAlign="space-between center"
+        fxLayoutGap="10px">
+    <mat-form-field hintLabel="Maximum length is 100">
+      <input type="text"
+             #title
+             formControlName="title"
+             placeholder="Title"
+             matInput>
+      <mat-hint align="end">{{title.value.length}}/100</mat-hint>
+      <mat-error *ngIf="!menuForm.get('title').valid && menuForm.get('title').touched">
+        <mat-error *ngIf="menuForm.get('title').errors['required']">Title is required.</mat-error>
+        <mat-error *ngIf="menuForm.get('title').errors['maxlength']">Maximum length is 100.</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field hintLabel="Maximum length is 100">
+      <input type="text"
+             #link
+             formControlName="link"
+             placeholder="Link"
+             matInput>
+      <mat-hint align="end">{{link.value.length}}/100</mat-hint>
+      <mat-error *ngIf="!menuForm.get('link').valid && menuForm.get('link').touched">
+        <mat-error *ngIf="menuForm.get('link').errors['required']">Link is required.</mat-error>
+        <mat-error *ngIf="menuForm.get('link').errors['maxlength']">Maximum length is 100.</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field hintLabel="Maximum length is 100">
+      <input type="text"
+             #icon
+             formControlName="iconName"
+             placeholder="Icon"
+             matInput>
+      <mat-hint align="end">{{icon.value.length}}/100</mat-hint>
+      <mat-error *ngIf="!menuForm.get('iconName').valid && menuForm.get('iconName').touched">
+        <mat-error *ngIf="menuForm.get('iconName').errors['required']">Icon is required.</mat-error>
+        <mat-error *ngIf="menuForm.get('iconName').errors['maxlength']">Maximum length is 100.</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number"
+             #sortId
+             formControlName="sortId"
+             placeholder="Sort Id"
+             matInput>
+      <mat-error *ngIf="!menuForm.get('sortId').valid && menuForm.get('sortId').touched">
+        <mat-error *ngIf="menuForm.get('sortId').errors['sortId']">Icon is required.</mat-error>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Main Menu</mat-label>
+      <mat-select formControlName="selectedMainMenu">
+        <mat-option *ngFor="let menu of mainMenus"
+                    [value]="menu.id">
+          {{menu.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Role</mat-label>
+      <mat-select multiple
+                  formControlName="selectedUserRole">
+        <mat-option *ngFor="let role of roles"
+                    [value]="role.id">
+          {{role.description}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="!menuForm.get('selectedUserRole').valid && menuForm.get('selectedUserRole').touched">
+        <mat-error *ngIf="menuForm.get('selectedUserRole').errors['required']">Role is required.</mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <div fxLayoutAlign="start">
+      <mat-checkbox formControlName='isActive'
+                    labelPosition="before"
+                    color="primary">Is Active</mat-checkbox>
+    </div>
+    <div fxLayout="row"
+         fxLayoutGap="10px">
+      <button mat-raised-button
+              [disabled]="!menuForm.valid"
+              color="primary"
+              type="submit">Save</button>
+      <button mat-raised-button
+              type="button"
+              (click)="onCancel()"
+              class="accent">Cancel</button>
+    </div>
+  </form>
+</section>

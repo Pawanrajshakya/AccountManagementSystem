@@ -11,11 +11,12 @@ export class AlertService {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  showAlert(message: string, action: string = '', displayDuration: number = 1000) {
+  showAlert(message: string, action: string = '', displayDuration: number = 2000, isError: boolean = false) {
     this.snackBar.open(message, action, {
       duration: displayDuration,
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
+      panelClass: isError ? ['error-snackbar'] : ['message-snackbar']
     });
   }
 

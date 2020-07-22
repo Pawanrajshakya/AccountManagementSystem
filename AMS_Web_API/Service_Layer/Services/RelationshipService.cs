@@ -19,7 +19,7 @@ namespace Service_Layer.Services
 
         public async Task<int> Add(RelationshipToSaveDto entity)
         {
-            if (await _unitOfWork.Relationship.RelationshipExists(entity.Description))
+            if (await _unitOfWork.Relationship.Exists(x=>x.Description == entity.Description))
             {
                 throw new Exception("Already exists.");
             }

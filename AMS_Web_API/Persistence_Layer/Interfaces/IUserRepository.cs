@@ -6,7 +6,6 @@ namespace Persistence_Layer.Interfaces
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<bool> UserExists(string username);
         Task<User> GetUserRoles(int id);
     }
 }

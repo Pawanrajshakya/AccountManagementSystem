@@ -20,7 +20,7 @@ namespace Service_Layer.Dtos
         public string State { get; set; }
         public string ZipCode { get; set; }
         public int RelationshipId { get; set; } //Relationship with main account
-        public int Order { get; set; }
+        public int SortId { get; set; }
         public int CreatedBy { get; set; }
 
         public DateTime CreatedDate { get; set; }

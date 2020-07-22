@@ -3,7 +3,7 @@
        fxLayout="row"
        fxLayoutGap="10px">
     <div><i class="fa fa-bars"
-         (click)="hideTitle = !hideTitle"></i></div>
+         (click)="sidenav.toggle()"></i></div>
     <div> <a routerLink="/">AMS</a></div>
   </div>
   <div fxFlex
@@ -12,43 +12,47 @@
     <ul fxLayout
         fxLayoutGap="16px"
         class="navigation-items">
-      <li *ngIf="!!isLoggedIn">Welcome {{usernameToDisplay.toUpperCase()}}</li>
-      <li *ngIf="!!isLoggedIn"
+      <li *ngIf="!!(isLoading$ | async)">Welcome {{(usernameToDisplay$ | async).toUpperCase()}}</li>
+      <li *ngIf="!!(isLoading$ | async)"
           (click)="onChangePassword()"
           matTooltip="Change Password"><i class="fa fa-key"></i></li>
       <li><a routerLink="/login"
-           *ngIf="!isLoggedIn"
+           *ngIf="!(isLoading$ | async)"
            matTooltip="Sign In">Sign In <i class="fa fa-sign-in"></i></a></li>
       <li><a routerLink="/login"
            (click)="onSignOut()"
-           *ngIf="!!isLoggedIn"
+           *ngIf="!!(isLoading$ | async)"
            matTooltip="Sign Out"><i class="fa fa-sign-out"></i></a></li>
     </ul>
   </div>
 </mat-toolbar>
-
 <mat-drawer-container autosize>
   <mat-drawer #sidenav
               role="heading"
               mode="side"
               opened>
-    <mat-nav-list *ngIf="!!isLoggedIn">
+    <mat-nav-list *ngIf="!!(isLoading$ | async)">
       <mat-accordion displayMode="flat"
+                     multi="true"
                      #accordion="matAccordion">
         <div *ngFor="let menu of myMenu">
           <div *ngIf="!menu.hasSubMenu">
             <a mat-list-item
                [routerLink]="menu.link"> <i [class]="menu.icon"></i><span
-                    class="mat-list-item-text" *ngIf="!hideTitle">{{menu.title}}</span></a>
+                    class="mat-list-item-text">{{menu.title}}</span></a>
           </div>
-          <div *ngIf="menu.hasSubMenu">
-            <a mat-list-item
-               *ngFor="let sub of menu.subMenu"
-               [routerLink]="sub.link"
-               routerLinkActive="active"
-               [disabled]="sub.isDisabled"
-               [routerLinkActiveOptions]="{exact: true}">
-              <i [class]="sub.icon"></i>&nbsp;{{sub.title}}</a>
+          <div *ngIf="!!menu.hasSubMenu">
+            <mat-expansion-panel [expanded]="menu.isExpanded">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <i [class]="menu.icon"></i><span class="mat-list-item-text">{{menu.title}}</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-list dense>
+                <a [routerLink]="item.link" mat-list-item *ngFor="let item of menu.subMenus">
+                  <i [class]="item.icon"></i><span class="mat-list-item-text">{{item.title}}</span> </a>
+              </mat-list>
+            </mat-expansion-panel>
           </div>
         </div>
       </mat-accordion>
